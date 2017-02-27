@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>cucumber で middleman extension の開発とテスト | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概要テストのフレームワーク。自然言語っぽく書けるのがいいらしい。middleman extension の開発で使うことを想定。
+参考：
+
+https://github.com/cucumber/cucumber
+Middleman カスタム拡張チュートリアル - Qiita
+
+インストールと使い方ただ使うなら gem i cucumber だが、extension なので middleman-h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cucumber で middleman extension の開発とテスト">
+<meta property="og:url" content="http://atarukodaka.github.io/hexo/software/middleman/cucumber.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="概要テストのフレームワーク。自然言語っぽく書けるのがいいらしい。middleman extension の開発で使うことを想定。
+参考：
+
+https://github.com/cucumber/cucumber
+Middleman カスタム拡張チュートリアル - Qiita
+
+インストールと使い方ただ使うなら gem i cucumber だが、extension なので middleman-h">
+<meta property="og:updated_time" content="2017-02-27T05:34:49.269Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cucumber で middleman extension の開発とテスト">
+<meta name="twitter:description" content="概要テストのフレームワーク。自然言語っぽく書けるのがいいらしい。middleman extension の開発で使うことを想定。
+参考：
+
+https://github.com/cucumber/cucumber
+Middleman カスタム拡張チュートリアル - Qiita
+
+インストールと使い方ただ使うなら gem i cucumber だが、extension なので middleman-h">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/hexo/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo/">Home</a>
+        
+          <a class="main-nav-link" href="/hexo/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://atarukodaka.github.io/hexo"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-software/middleman/cucumber" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/software/middleman/cucumber.html" class="article-date">
+  <time datetime="2015-03-26T15:00:00.000Z" itemprop="datePublished">2015-03-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      cucumber で middleman extension の開発とテスト
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>テストのフレームワーク。自然言語っぽく書けるのがいいらしい。<br>middleman extension の開発で使うことを想定。</p>
+<p><strong>参考：</strong></p>
+<ul>
+<li><a href="https://github.com/cucumber/cucumber" target="_blank" rel="external">https://github.com/cucumber/cucumber</a></li>
+<li><a href="http://qiita.com/yterajima/items/42ea2529795823832d5c" target="_blank" rel="external">Middleman カスタム拡張チュートリアル - Qiita</a></li>
+</ul>
+<h3 id="インストールと使い方"><a href="#インストールと使い方" class="headerlink" title="インストールと使い方"></a>インストールと使い方</h3><p>ただ使うなら gem i cucumber だが、<br>extension なので middleman-hello.gemspec に入れておく。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">% vi middleman-hello.gemspec</div><div class="line">...</div><div class="line">Gem::Specification.new do |spec|</div><div class="line">  ...</div><div class="line">  spec.add_runtime_dependency &quot;middleman&quot;, &quot;~&gt; 3.3&quot;</div><div class="line">  spec.add_development_dependency &quot;bundler&quot;, &quot;~&gt; 1.7&quot;</div><div class="line">  spec.add_development_dependency &quot;rake&quot;, &quot;~&gt; 10.0&quot;</div><div class="line">  spec.add_development_dependency &quot;cucumber&quot;, &quot;~&gt; 1.3&quot;</div><div class="line">  spec.add_development_dependency &quot;aruba&quot;, &quot;~&gt; 0.6&quot;</div><div class="line">  spec.add_development_dependency &quot;therubyracer&quot;</div><div class="line">  spec.add_development_dependency &quot;pry-byebug&quot;</div><div class="line">  spec.add_development_dependency &quot;rb-readline&quot;</div><div class="line">`</div></pre></td></tr></table></figure>
+<p>debug 用に pry なども入れておくとよい。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">% cucumber features/xxx.feature</div></pre></td></tr></table></figure>
+<h3 id="features-xxx-feature"><a href="#features-xxx-feature" class="headerlink" title="features/xxx.feature"></a>features/xxx.feature</h3><p>どうテストするかの規定書</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">features</div><div class="line">├── activate.feature</div><div class="line">├── archives.feature</div><div class="line">├── support</div><div class="line">│   └── env.rb</div></pre></td></tr></table></figure>
+<p>詳しくは後述。</p>
+<h3 id="fixtures-xxx-app-：テストするための道具や箱"><a href="#fixtures-xxx-app-：テストするための道具や箱" class="headerlink" title="fixtures/xxx-app/：テストするための道具や箱"></a>fixtures/xxx-app/：テストするための道具や箱</h3><p>テストするために使うconfig.rb や source/* などを入れておく。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">fixtures/</div><div class="line">├── archives-app</div><div class="line">│   ├── config.rb</div><div class="line">│   └── source</div><div class="line">│       ├── archives_template_month.html.erb</div><div class="line">│       ├── archives_template_year.html.erb</div><div class="line">│       ├── game</div><div class="line">│       │   └── kancolle</div><div class="line">│       │       ├── memo.html.md</div><div class="line">│       │       └── memo.html.md~</div><div class="line">│       └── index.html.md</div><div class="line">├── empty-app</div><div class="line">│   ├── config.rb</div><div class="line">│   └── source</div></pre></td></tr></table></figure>
+<h2 id="feature-の書き方"><a href="#feature-の書き方" class="headerlink" title="feature の書き方"></a>feature の書き方</h2><h3 id="features-support-env-rb"><a href="#features-support-env-rb" class="headerlink" title="features/support/env.rb"></a>features/support/env.rb</h3><p>使うのを require しとく。middleman/step_definitions を使えば大抵どうにかなる。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">PROJECT_ROOT_PATH = File.dirname(File.dirname(File.dirname(__FILE_<span class="number">_</span>)))</div><div class="line"><span class="keyword">require</span> <span class="string">'middleman-core'</span></div><div class="line"><span class="keyword">require</span> <span class="string">'middleman-core/step_definitions'</span></div><div class="line"><span class="keyword">require</span> File.join(PROJECT_ROOT_PATH, <span class="string">'lib'</span>, <span class="string">'middleman-hello'</span>)</div></pre></td></tr></table></figure>
+<h3 id="xxx-feature-の文法"><a href="#xxx-feature-の文法" class="headerlink" title="xxx.feature の文法"></a>xxx.feature の文法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Feature: 機能、つうかやることのの説明。namespace みたいなもんか</div><div class="line"></div><div class="line">  Scenario: シナリオ。これやるとこうなるはずえす</div><div class="line">    Given a fixture app &quot;empty-app&quot;</div><div class="line">    And a file named &quot;config.rb&quot; with:</div><div class="line">      &quot;&quot;&quot;</div><div class="line">      activate :hello</div><div class="line">      &quot;&quot;&quot;</div><div class="line">    When I run `middleman build --verbose`</div><div class="line">    Then the exit status should be 0</div><div class="line">    And the output should not contain &quot;Unknown Extension: hello&quot;</div></pre></td></tr></table></figure>
+<ul>
+<li>Given: 前提条件</li>
+<li>When：こうすると</li>
+<li>Then：こうなるはず</li>
+</ul>
+<p>And は、直前の 上記3つのどれかと同じ。続き。</p>
+<p>大抵、以下のひな形でどうにかなる</p>
+<figure class="highlight feature"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">% vi hello.feature</div><div class="line"><span class="keyword">Feature</span>: hello</div><div class="line"></div><div class="line">  <span class="keyword">Scenario</span>: hello</div><div class="line">    <span class="keyword">Given</span> the Server is running at <span class="string">"hello-app"</span></div><div class="line">    <span class="keyword">When</span> I go to <span class="string">"/hello.html"</span></div><div class="line">    <span class="keyword">Then</span> I should see <span class="string">"Hello, World"</span></div></pre></td></tr></table></figure>
+<h3 id="step-definitions"><a href="#step-definitions" class="headerlink" title="step definitions"></a>step definitions</h3><p>…</p>
+<h2 id="fixtureの用意"><a href="#fixtureの用意" class="headerlink" title="fixtureの用意"></a>fixtureの用意</h2><h2 id="テストする"><a href="#テストする" class="headerlink" title="テストする"></a>テストする</h2><p>add cucumber into gemspec or Gemfiles</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">% <span class="built_in">export</span> CUCUMBER_COLORS=failed=white:failed_param=white</div><div class="line">% bundle <span class="built_in">exec</span> cucumber features/activate.feature</div></pre></td></tr></table></figure>
+<p>failed で黒字に赤いのは見にくいので、白くしてある。.bashrc などに加えておくと吉。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/software/middleman/cucumber.html" data-id="cizo0286w002t80pvey6k8ln6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/hexo/software/middleman/extension-memo.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          extension覚書
+        
+      </div>
+    </a>
+  
+  
+    <a href="/hexo/software/middleman/extension.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Middleman の extensionを書くための覚書</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/figureskating/">figureskating</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/hobby/">hobby</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/">software</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/hexo/">hexo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/">ゲーム</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/WoT/">WoT</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/">艦これ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/イベント/">イベント</a></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/SSG/">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/kancolle/">kancolle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/middleman/">middleman</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/vagrant/">vagrant</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/hexo/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/hexo/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/hexo/tags/kancolle/" style="font-size: 10px;">kancolle</a> <a href="/hexo/tags/middleman/" style="font-size: 20px;">middleman</a> <a href="/hexo/tags/vagrant/" style="font-size: 10px;">vagrant</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/03/">March 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/01/">January 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2014/11/">November 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo/software/hexo-vagrant.html">HEXO を vagrant 上で使ってみる</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/hugo-vagrant.html">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/figureskating/cheat_sheet.html">フィギュアスケート・チートシート</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/game/kancolle/event/2017-winter.html">2017冬イベント「光作戦」</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/middleman/v4-resources-collection.html">middleman v4 の collection と resources 機能を使ってみる</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo/" class="mobile-nav-link">Home</a>
+  
+    <a href="/hexo/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/hexo/fancybox/jquery.fancybox.css">
+  <script src="/hexo/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/hexo/js/script.js"></script>
+
+  </div>
+</body>
+</html>

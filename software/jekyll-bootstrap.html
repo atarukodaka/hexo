@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>jekyll bootstrap + github pages でブログ運用 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概要ローカルで markdown ガリガリ書いてローカルで確認、サーバーへアップロードまで CUI でサクサクできるのでよいです。軽いし。
+jekyll 単体だといろいろ面倒なので、ブログ作成支援や bootstrap を使ったレイアウトなどがついてる jekyll bootstrap を使います。動作を理解するためには、まず jekyll 単体を触ってみたほうがいいかもですが。
+セットアップ基本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jekyll bootstrap + github pages でブログ運用">
+<meta property="og:url" content="http://atarukodaka.github.io/hexo/software/jekyll-bootstrap.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="概要ローカルで markdown ガリガリ書いてローカルで確認、サーバーへアップロードまで CUI でサクサクできるのでよいです。軽いし。
+jekyll 単体だといろいろ面倒なので、ブログ作成支援や bootstrap を使ったレイアウトなどがついてる jekyll bootstrap を使います。動作を理解するためには、まず jekyll 単体を触ってみたほうがいいかもですが。
+セットアップ基本">
+<meta property="og:updated_time" content="2017-02-27T05:34:49.261Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jekyll bootstrap + github pages でブログ運用">
+<meta name="twitter:description" content="概要ローカルで markdown ガリガリ書いてローカルで確認、サーバーへアップロードまで CUI でサクサクできるのでよいです。軽いし。
+jekyll 単体だといろいろ面倒なので、ブログ作成支援や bootstrap を使ったレイアウトなどがついてる jekyll bootstrap を使います。動作を理解するためには、まず jekyll 単体を触ってみたほうがいいかもですが。
+セットアップ基本">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/hexo/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo/">Home</a>
+        
+          <a class="main-nav-link" href="/hexo/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://atarukodaka.github.io/hexo"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-software/jekyll-bootstrap" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/software/jekyll-bootstrap.html" class="article-date">
+  <time datetime="2014-11-01T15:00:00.000Z" itemprop="datePublished">2014-11-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/hexo/categories/software/">software</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jekyll bootstrap + github pages でブログ運用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>ローカルで markdown ガリガリ書いてローカルで確認、サーバーへアップロードまで CUI でサクサクできるのでよいです。軽いし。</p>
+<p>jekyll 単体だといろいろ面倒なので、ブログ作成支援や bootstrap を使ったレイアウトなどがついてる jekyll bootstrap を使います。<br>動作を理解するためには、まず jekyll 単体を触ってみたほうがいいかもですが。</p>
+<h2 id="セットアップ"><a href="#セットアップ" class="headerlink" title="セットアップ"></a>セットアップ</h2><p>基本的には <a href="http://jekyllbootstrap.com/usage/jekyll-quick-start.html" target="_blank" rel="external">Jekyll Quick Start | ruhoh universal static blog generator</a><br>に従えばいいのですが、一応ステップバイステップで。ローカルで動かす→サーバーで動かす、という順でいきます。</p>
+<h3 id="ローカルにjeklly-bootstrap-のインストール"><a href="#ローカルにjeklly-bootstrap-のインストール" class="headerlink" title="ローカルにjeklly-bootstrap のインストール"></a>ローカルにjeklly-bootstrap のインストール</h3><p>まず jekyll を入れます：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">% sudo gem install jekyll</div></pre></td></tr></table></figure>
+<p>次に jekyll-bootstrap。git clone でローカルに持ってきます。<em>username</em> は自分のユーザ名に変えてください。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">% git clone https://github.com/plusjade/jekyll-bootstrap.git _username_.github.io</div></pre></td></tr></table></figure>
+<p>そして、サーバー稼働：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">% cd _username_.github.io</div><div class="line">% jekyll serve</div><div class="line">...</div><div class="line">    Server address: http://0.0.0.0:4000/</div><div class="line">  Server running... press ctrl-c to stop.</div></pre></td></tr></table></figure>
+<p>と出てくれば、 <a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a> で動作が確認できます。そしたらgithub.io 上に持って行きましょう。</p>
+<p>また、–port 3000　などとすればポートを指定できます。</p>
+<h3 id="github-io-上へインストール"><a href="#github-io-上へインストール" class="headerlink" title="github.io 上へインストール"></a>github.io 上へインストール</h3><p>まず、<a href="https://github.com/new" target="_blank" rel="external">https://github.com/new</a> から “<em>username</em>.github.io” というレポジトリを作成します。”Initialize this repository with a README” はチェックしなくてもよい。</p>
+<p>そうしたら、remote repository として github.io を指定し、push します。パスワードを聞かれるので入力すること。url として <a href="https://username:password@github.com" target="_blank" rel="external">https://username:password@github.com</a>…. とすると省略できますが、非推奨。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% git remote set-url origin  https://_username_@github.com/_username_/_username_.github.io.git</div><div class="line">% git push origin master</div><div class="line">Password:</div></pre></td></tr></table></figure>
+<p><a href="http://_username_.github.io" target="_blank" rel="external">http://_username_.github.io</a> で動作確認します。</p>
+<h2 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h2><p>_config.ymlで、author: 以下の name, email などを適宜設定。</p>
+<p>markdown は redcarpet にしとくと吉</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">title : A Sample Blog</div><div class="line">author :</div><div class="line">  name : Your Name</div><div class="line">  email : your@mail.address.com</div><div class="line">  github : username</div><div class="line">  twitter : account_name</div><div class="line"></div><div class="line"><span class="attr">markdown:</span> redcarpet</div><div class="line"><span class="attr">redcarpet:</span></div><div class="line"><span class="attr">  extensions:</span> [<span class="string">"autolink"</span>]</div></pre></td></tr></table></figure>
+<h2 id="運用"><a href="#運用" class="headerlink" title="運用"></a>運用</h2><p>運用形態としては、ローカルで *.md を編集→ ローカル上で確認→ サーバーへ push、という形になります。</p>
+<h2 id="ページの編集"><a href="#ページの編集" class="headerlink" title="ページの編集"></a>ページの編集</h2><p>あまり変更のない固定ページ。直下にabout.md などを作ると、about.html に変換してくれます。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">% rake page name=&quot;about&quot;</div></pre></td></tr></table></figure>
+<p>name=以下を省略すると “new-page” となります。</p>
+<p>YAMLヘッダで group: navigation と追加すると、ナビゲーションバーに入れてくれます。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">---</span></div><div class="line"><span class="attr">layout:</span> page</div><div class="line"><span class="attr">title:</span> <span class="string">"About"</span></div><div class="line"><span class="attr">description:</span> <span class="string">""</span></div><div class="line"><span class="attr">group:</span> navigation</div><div class="line"><span class="meta">---</span></div><div class="line">this is an about page.</div></pre></td></tr></table></figure>
+<h3 id="ポスト"><a href="#ポスト" class="headerlink" title="ポスト"></a>ポスト</h3><p>ブログの記事を編集、追加します。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rake post title=&quot;test&quot;</div></pre></td></tr></table></figure>
+<p>とすると “_posts/2014-11-01-test.md” が作られるので、これを編集します。<br>title=以下を省略すると “new-post” になります。</p>
+<h3 id="ローカルで確認"><a href="#ローカルで確認" class="headerlink" title="ローカルで確認"></a>ローカルで確認</h3><p> –watch オプションをつけると、ファイルを変更すると自動的に再生成してくれます。<br>また、vagrant などで外で編集すると変更を検知してくれないので、–force_polling をつけます。<br>ラグがあるときは、明示的に “jekyll build” してしまってもよい。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">% jekyll serve --watch --force_polling</div></pre></td></tr></table></figure>
+<h3 id="サーバーへ-push"><a href="#サーバーへ-push" class="headerlink" title="サーバーへ push"></a>サーバーへ push</h3><p>ふつーに add, commit, push します：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% git add .</div><div class="line">% git commit -m blog -a</div><div class="line">% git push origin master</div></pre></td></tr></table></figure>
+<h3 id="makefile-で簡略化"><a href="#makefile-で簡略化" class="headerlink" title="makefile で簡略化"></a>makefile で簡略化</h3><p>いろいろタイプするのが面倒なので、makefile を作っておくと楽です：</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="section">build:</span></div><div class="line">	jekyll build</div><div class="line"></div><div class="line"><span class="section">cmt:</span></div><div class="line">	git status</div><div class="line">	git commit -m msg -a</div><div class="line"></div><div class="line"><span class="section">push:</span></div><div class="line">	git push origin master</div><div class="line"></div><div class="line"><span class="section">serve:</span></div><div class="line">	jekyll serve --watch --force_polling</div></pre></td></tr></table></figure>
+<p>serve –watch すると通知表示がうざいので、&gt;/dev/null にしてもいいかも。</p>
+<h2 id="カスタマイズ"><a href="#カスタマイズ" class="headerlink" title="カスタマイズ"></a>カスタマイズ</h2><h3 id="レイアウトの変更"><a href="#レイアウトの変更" class="headerlink" title="レイアウトの変更"></a>レイアウトの変更</h3> 
+
+_layouts/default.html をいじくります。が、jekyll bootstrap だと 
+_includes/themes/bootstrap-3/default.html を使うようになっているので、
+これを直接いじくるか、コピーしてそっちをいじくります。
+
+サイドメニューをつけたいので、default.html の {{ content }} あたりのを以下のように変更。xs, sm では表示しないように。
+
+
+undefined
+
+sidebar を _includes/ 以下に作ってそれを include してます。
+
+sidebar ではカテゴリと最新記事を表示するようにしてます。category.html あたりからパクりました。
+
+undefined
+
+### Pygments
+コードの色分けはしたいですね。bootstrap3 には pygments が入っていないようなので、
+ぐぐって出てきたのを assets/themes/bootstrap-3/css/pygment_trac.css に保存し、default.html に link を加えます。
+
+undefined
+
+### ウェブ上での編集
+ローカルでの編集を想定してるので、ウェブ上での編集は想定されていないので、
+prose.io を使う。あらかじめ登録しておく（authenticate するだけ）。
+
+post.html にprose.io の編集画面へのリンクをはると便利。日付の隣につける：
+
+undefined
+
+### 見出し番号
+undefined
+
+### トップで最新記事を表示
+[paco.jp » jekyllでトップページにsite.postsの最新記事を表示する] (http://paco.jp/blog/jekyll/ruby/2013/01/01/jekyll%E3%81%A6%E3%82%99%E3%83%88%E3%83%83%E3%83%95%E3%82%9A%E3%83%98%E3%82%9A%E3%83%BC%E3%82%B7%E3%82%99%E3%81%ABsite.posts%E3%81%AE%E6%9C%80%E6%96%B0%E8%A8%98%E4%BA%8B%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%99%E3%82%8B/)
+を参考に：
+
+undefined
+
+undefined
+
+### プラグイン
+
+- amazon_tag: https://github.com/nitoyon/tech.nitoyon.com/blob/master/_plugins/tags/amazon.rb
+
+## Tips
+### .emacs
+iso-2022-jp だとエラーになるので、utf-8 に。
+
+undefined
+
+## 参考文献
+
+- [paco.jp » jekyllでトップページにsite.postsの最新記事を表示する] (http://paco.jp/blog/jekyll/ruby/2013/01/01/jekyll%E3%81%A6%E3%82%99%E3%83%88%E3%83%83%E3%83%95%E3%82%9A%E3%83%98%E3%82%9A%E3%83%BC%E3%82%B7%E3%82%99%E3%81%ABsite.posts%E3%81%AE%E6%9C%80%E6%96%B0%E8%A8%98%E4%BA%8B%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%99%E3%82%8B/)
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/software/jekyll-bootstrap.html" data-id="cizo02865001v80pv1paj4gbj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/hexo/game/ingress.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ingress 覚書
+        
+      </div>
+    </a>
+  
+  
+    <a href="/hexo/software/development-environment.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">開発環境のセットアップ</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/figureskating/">figureskating</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/hobby/">hobby</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/">software</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/hexo/">hexo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/">ゲーム</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/WoT/">WoT</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/">艦これ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/イベント/">イベント</a></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/SSG/">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/kancolle/">kancolle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/middleman/">middleman</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/vagrant/">vagrant</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/hexo/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/hexo/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/hexo/tags/kancolle/" style="font-size: 10px;">kancolle</a> <a href="/hexo/tags/middleman/" style="font-size: 20px;">middleman</a> <a href="/hexo/tags/vagrant/" style="font-size: 10px;">vagrant</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/03/">March 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/01/">January 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2014/11/">November 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo/software/hexo-vagrant.html">HEXO を vagrant 上で使ってみる</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/hugo-vagrant.html">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/figureskating/cheat_sheet.html">フィギュアスケート・チートシート</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/game/kancolle/event/2017-winter.html">2017冬イベント「光作戦」</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/middleman/v4-resources-collection.html">middleman v4 の collection と resources 機能を使ってみる</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo/" class="mobile-nav-link">Home</a>
+  
+    <a href="/hexo/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/hexo/fancybox/jquery.fancybox.css">
+  <script src="/hexo/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/hexo/js/script.js"></script>
+
+  </div>
+</body>
+</html>

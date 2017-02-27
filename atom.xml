@@ -110,43 +110,6 @@
   </entry>
   
   <entry>
-    <title>middleman v4 の collection と resources 機能を使ってみる</title>
-    <link href="http://atarukodaka.github.io/hexo/software/middleman/v4-resources-collection.html"/>
-    <id>http://atarukodaka.github.io/hexo/software/middleman/v4-resources-collection.html</id>
-    <published>2017-02-15T15:00:00.000Z</published>
-    <updated>2017-02-27T05:34:49.299Z</updated>
-    
-    <content type="html"><![CDATA[<p>middlemn v4 では resources と collection というのが導入されたらしいのですが、<a href="https://middlemanapp.com/jp/basics/upgrade-v4/#コレクション" target="_blank" rel="external">公式ドキュメント</a>を見てもいまいち分かりにくいです。どうやらわざわざextension で manipulate_resource_list() を使わなくても手軽にリソース操作ができるっぽいですね。</p>
-<h3 id="resources-を使ってみる。"><a href="#resources-を使ってみる。" class="headerlink" title="resources を使ってみる。"></a>resources を使ってみる。</h3><p>とりあえず、すべてのリソースに ‘foo’ というローカル変数を使えるようにしてみます。config.rb に</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">resources.each &#123;<span class="params">|res|</span></div><div class="line">  res.add_metadata(<span class="symbol">locals:</span> &#123;<span class="symbol">foo:</span> <span class="string">"YES! FOO!!!"</span>&#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>と書くだけで、*.html.erb で</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">foo? &lt;%= foo %&gt;</div></pre></td></tr></table></figure>
-<p>と使えるようです。確かに便利ですね。v3ではこれをするのには Middleman::Extension から派生させたクラスを作って manipulate_resource_list() を書いてそのクラスを Middleman::Extensions に register して activate して、、、という手順を踏まなければなりませんでしたから。</p>
-<h3 id="collection-を使ってみる"><a href="#collection-を使ってみる" class="headerlink" title="collection を使ってみる"></a>collection を使ってみる</h3><p>ドキュメントのタグの例題が分かりにくいので、ここでは、<strong>「見てほしい記事に mitene: 100 とかフロントマターにつけて大きい順に表示する」</strong>というのをやってみたいと思います。</p>
-<p>config.rb:</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mitene = resources.select &#123;<span class="params">|r|</span> r.data.mitene &#125;.sort_by &#123;<span class="params">|r|</span> r.data.mitene&#125;.reverse</div><div class="line"></div><div class="line">collection <span class="symbol">:mitene</span>, mitene</div></pre></td></tr></table></figure>
-<p>というふうに、collection() を使って、あるシンボルに対して、<strong>resources から始まるチェーンから作られたオブジェクト</strong>を紐付けしてあげます。そうすると mitene.html.erb でそのシンボルを使って、</p>
-<figure class="highlight erb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>みてね！<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> collection(<span class="symbol">:mitene</span>).each <span class="keyword">do</span> <span class="params">|res|</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> link_to(res.data.title, res) </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> <span class="keyword">end</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>というふうに、集めておいたオブジェクトを呼び出せるようです。</p>
-<p>また、config.rb:</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mitene = resources.select &#123;<span class="params">|r|</span> r.data.mitene &#125;.group_by &#123;<span class="params">|r|</span> r.data.mitene &#125;</div><div class="line">collection <span class="symbol">:mitene</span>, mitene</div></pre></td></tr></table></figure>
-<p>とハッシュにしてあげて</p>
-<figure class="highlight erb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>みてね！順<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> collection(<span class="symbol">:mitene</span>).sort_by &#123;<span class="params">|r, v|</span> r&#125;.reverse.each <span class="keyword">do</span> <span class="params">|key, items|</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> key </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> items.each <span class="keyword">do</span> <span class="params">|res|</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> link_to(res.data.title, res) </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> <span class="keyword">end</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> <span class="keyword">end</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>と受け取ることも出来ます。</p>
-<p>ちょっとリソースに手を加えたり、特定の条件のリソースを集めておいてテンプレートで使うということが手軽にできそうな感じです。</p>
-<p>また分かり次第追記していきます。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;middlemn v4 では resources と collection というのが導入されたらしいのですが、&lt;a href=&quot;https://middlemanapp.com/jp/basics/upgrade-v4/#コレクション&quot; target=&quot;_blank&quot; r
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>2017冬イベント「光作戦」</title>
     <link href="http://atarukodaka.github.io/hexo/game/kancolle/event/2017-winter.html"/>
     <id>http://atarukodaka.github.io/hexo/game/kancolle/event/2017-winter.html</id>
@@ -203,6 +166,43 @@
   </entry>
   
   <entry>
+    <title>middleman v4 の collection と resources 機能を使ってみる</title>
+    <link href="http://atarukodaka.github.io/hexo/software/middleman/v4-resources-collection.html"/>
+    <id>http://atarukodaka.github.io/hexo/software/middleman/v4-resources-collection.html</id>
+    <published>2017-02-15T15:00:00.000Z</published>
+    <updated>2017-02-27T05:34:49.299Z</updated>
+    
+    <content type="html"><![CDATA[<p>middlemn v4 では resources と collection というのが導入されたらしいのですが、<a href="https://middlemanapp.com/jp/basics/upgrade-v4/#コレクション" target="_blank" rel="external">公式ドキュメント</a>を見てもいまいち分かりにくいです。どうやらわざわざextension で manipulate_resource_list() を使わなくても手軽にリソース操作ができるっぽいですね。</p>
+<h3 id="resources-を使ってみる。"><a href="#resources-を使ってみる。" class="headerlink" title="resources を使ってみる。"></a>resources を使ってみる。</h3><p>とりあえず、すべてのリソースに ‘foo’ というローカル変数を使えるようにしてみます。config.rb に</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">resources.each &#123;<span class="params">|res|</span></div><div class="line">  res.add_metadata(<span class="symbol">locals:</span> &#123;<span class="symbol">foo:</span> <span class="string">"YES! FOO!!!"</span>&#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>と書くだけで、*.html.erb で</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">foo? &lt;%= foo %&gt;</div></pre></td></tr></table></figure>
+<p>と使えるようです。確かに便利ですね。v3ではこれをするのには Middleman::Extension から派生させたクラスを作って manipulate_resource_list() を書いてそのクラスを Middleman::Extensions に register して activate して、、、という手順を踏まなければなりませんでしたから。</p>
+<h3 id="collection-を使ってみる"><a href="#collection-を使ってみる" class="headerlink" title="collection を使ってみる"></a>collection を使ってみる</h3><p>ドキュメントのタグの例題が分かりにくいので、ここでは、<strong>「見てほしい記事に mitene: 100 とかフロントマターにつけて大きい順に表示する」</strong>というのをやってみたいと思います。</p>
+<p>config.rb:</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mitene = resources.select &#123;<span class="params">|r|</span> r.data.mitene &#125;.sort_by &#123;<span class="params">|r|</span> r.data.mitene&#125;.reverse</div><div class="line"></div><div class="line">collection <span class="symbol">:mitene</span>, mitene</div></pre></td></tr></table></figure>
+<p>というふうに、collection() を使って、あるシンボルに対して、<strong>resources から始まるチェーンから作られたオブジェクト</strong>を紐付けしてあげます。そうすると mitene.html.erb でそのシンボルを使って、</p>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>みてね！<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> collection(<span class="symbol">:mitene</span>).each <span class="keyword">do</span> <span class="params">|res|</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> link_to(res.data.title, res) </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> <span class="keyword">end</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>というふうに、集めておいたオブジェクトを呼び出せるようです。</p>
+<p>また、config.rb:</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mitene = resources.select &#123;<span class="params">|r|</span> r.data.mitene &#125;.group_by &#123;<span class="params">|r|</span> r.data.mitene &#125;</div><div class="line">collection <span class="symbol">:mitene</span>, mitene</div></pre></td></tr></table></figure>
+<p>とハッシュにしてあげて</p>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>みてね！順<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> collection(<span class="symbol">:mitene</span>).sort_by &#123;<span class="params">|r, v|</span> r&#125;.reverse.each <span class="keyword">do</span> <span class="params">|key, items|</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> key </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> items.each <span class="keyword">do</span> <span class="params">|res|</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> link_to(res.data.title, res) </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> <span class="keyword">end</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> <span class="keyword">end</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>と受け取ることも出来ます。</p>
+<p>ちょっとリソースに手を加えたり、特定の条件のリソースを集めておいてテンプレートで使うということが手軽にできそうな感じです。</p>
+<p>また分かり次第追記していきます。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;middlemn v4 では resources と collection というのが導入されたらしいのですが、&lt;a href=&quot;https://middlemanapp.com/jp/basics/upgrade-v4/#コレクション&quot; target=&quot;_blank&quot; r
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>フレームワーク構想</title>
     <link href="http://atarukodaka.github.io/hexo/software/middleman/framework_consideration.html"/>
     <id>http://atarukodaka.github.io/hexo/software/middleman/framework_consideration.html</id>
@@ -227,7 +227,7 @@
 <li>pagination は欲しい</li>
 <li>tag はあんま使わない</li>
 </ul>
-<p>ってんで<br><a href="http://atarukodaka.github.io/software/middleman/middleman-akcms.html" target="_blank" rel="external">http://atarukodaka.github.io/software/middleman/middleman-akcms.html</a>　<br>のように動くのを akcms と銘打って <a href="https://github.com/atarukodaka/middleman-akcms/" target="_blank" rel="external">https://github.com/atarukodaka/middleman-akcms/</a> としてみたけど、いろいろごちゃごちゃしてきてどうしようかと。</p>
+<p>ってんで<br><a href="http://atarukodaka.github.io/software/middleman/middleman-akcms.html">http://atarukodaka.github.io/software/middleman/middleman-akcms.html</a>　<br>のように動くのを akcms と銘打って <a href="https://github.com/atarukodaka/middleman-akcms/" target="_blank" rel="external">https://github.com/atarukodaka/middleman-akcms/</a> としてみたけど、いろいろごちゃごちゃしてきてどうしようかと。</p>
 <h2 id="問題、提案など"><a href="#問題、提案など" class="headerlink" title="問題、提案など"></a>問題、提案など</h2><ul>
 <li>resource にインスタンスをつけたいんだけど、Middleman::Sitemap::Resource 直にモンキーパッチあてるのは避けたいし、<ul>
 <li>manipulate_resource_list() で each resource に extend してもいいんだけど、pagination するときに ProxyResource を new すると extend されてないんでモニョ. clone してもパラメータ上書きできないし</li>
@@ -259,7 +259,7 @@
     
     <content type="html"><![CDATA[<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>middleman のディレクトリごとのサマリーを自動生成する文書管理システムを拡張機能として作ってみました。</p>
 <p><a href="https://github.com/atarukodaka/middleman-akcms" target="_blank" rel="external">akcms - Ataru Kodaka Content Management System - atarukodaka/middleman-akcms</a></p>
-<p>動作サンプルはこちら：<a href="http://atarukodaka.github.io/" target="_blank" rel="external">Home - Ataru Kodaka Site</a></p>
+<p>動作サンプルはこちら：<a href="http://atarukodaka.github.io/">Home - Ataru Kodaka Site</a></p>
 <p>スナップショット：</p>
 <div><br><a href="/images/middleman-akcms-snapshot.png"><img src="/images/middleman-akcms-snapshot.png" alt="スナップショット" style="max-width: 70%"></a><br></div>
 

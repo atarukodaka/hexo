@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>開発環境のセットアップ | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="仮想OSのインストールhttp://dotinstall.com/lessons/basic_local_development_v2/24803 を参考に。
+VirtualBox, VigrantVirtualBox と Vigrant をwindows上にインストール。
+
+virtualbox: https://www.virtualbox.org/wiki/Downloads
+vigrant">
+<meta property="og:type" content="article">
+<meta property="og:title" content="開発環境のセットアップ">
+<meta property="og:url" content="http://atarukodaka.github.io/hexo/software/development-environment.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="仮想OSのインストールhttp://dotinstall.com/lessons/basic_local_development_v2/24803 を参考に。
+VirtualBox, VigrantVirtualBox と Vigrant をwindows上にインストール。
+
+virtualbox: https://www.virtualbox.org/wiki/Downloads
+vigrant">
+<meta property="og:updated_time" content="2017-02-27T05:34:49.251Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="開発環境のセットアップ">
+<meta name="twitter:description" content="仮想OSのインストールhttp://dotinstall.com/lessons/basic_local_development_v2/24803 を参考に。
+VirtualBox, VigrantVirtualBox と Vigrant をwindows上にインストール。
+
+virtualbox: https://www.virtualbox.org/wiki/Downloads
+vigrant">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/hexo/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo/">Home</a>
+        
+          <a class="main-nav-link" href="/hexo/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://atarukodaka.github.io/hexo"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-software/development-environment" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/software/development-environment.html" class="article-date">
+  <time datetime="2014-10-31T15:00:00.000Z" itemprop="datePublished">2014-11-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/hexo/categories/software/">software</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      開発環境のセットアップ
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="仮想OSのインストール"><a href="#仮想OSのインストール" class="headerlink" title="仮想OSのインストール"></a>仮想OSのインストール</h2><p><a href="http://dotinstall.com/lessons/basic_local_development_v2/24803" target="_blank" rel="external">http://dotinstall.com/lessons/basic_local_development_v2/24803</a> を参考に。</p>
+<h3 id="VirtualBox-Vigrant"><a href="#VirtualBox-Vigrant" class="headerlink" title="VirtualBox, Vigrant"></a>VirtualBox, Vigrant</h3><p>VirtualBox と Vigrant をwindows上にインストール。</p>
+<ul>
+<li>virtualbox: <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="external">https://www.virtualbox.org/wiki/Downloads</a></li>
+<li>vigrant: <a href="http://www.vagrantup.com/downloads.html" target="_blank" rel="external">http://www.vagrantup.com/downloads.html</a></li>
+</ul>
+<p>box を持ってきて加える：</p>
+<p>centos6.4:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">% vagrant box add centos64box http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20131103.box</div><div class="line">% vagrant init centos64box</div></pre></td></tr></table></figure>
+<p>centos6.5:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">% vagrant box add centos65box https://github.com/2creatives/vagrant-centos/releases/download/v6.5.3/centos65-x86_64-20140116.box</div><div class="line">% vagrant init centos65box</div></pre></td></tr></table></figure>
+<p>vi Vagrantfile で private_network 部分のコメントアウトを外す</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># Create a private network, which allows host-only access to the machine</div><div class="line"># using a specific IP.</div><div class="line"> config.vm.network &quot;private_network&quot;, ip: &quot;192.168.33.10&quot;</div></pre></td></tr></table></figure>
+<p>そして up, ssh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">% vagrant up （時間かかる）</div><div class="line">% vagrant ssh</div></pre></td></tr></table></figure>
+<p>ホスト側から % ssh vagrant@193.168.33.10 を確かめる</p>
+<h2 id="開発環境"><a href="#開発環境" class="headerlink" title="開発環境"></a>開発環境</h2><p><em>*</em> 最新にアップデート</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">% sudo yum update -y （時間かかる）</div><div class="line">...</div><div class="line">% sudo echo &quot;options single-request-reopen&quot; &gt;&gt; /etc/resolv.conf</div><div class="line">% sudo service iptables stop</div><div class="line">% sudo chkconfig iptables off</div></pre></td></tr></table></figure>
+<h3 id="ssh"><a href="#ssh" class="headerlink" title="ssh"></a>ssh</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% ssh-keygen -t rsa</div><div class="line">% eval `ssh-agent`</div><div class="line">% ssh-add ~/.ssh/id_rsa</div></pre></td></tr></table></figure>
+<h3 id="init-files"><a href="#init-files" class="headerlink" title="init files"></a>init files</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git init</div><div class="line">git remote add origin git@github.com:atarukodaka/dotfiles.git</div><div class="line">git fetch origin</div><div class="line">git merge origin/master</div></pre></td></tr></table></figure>
+<h3 id="ruby-のインストール"><a href="#ruby-のインストール" class="headerlink" title="ruby のインストール"></a>ruby のインストール</h3><p>rbenv でruby のヴァージョンを切り替える</p>
+<p>先にopenssl を入れておく。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">% sudo yum -y install openssl-devel</div></pre></td></tr></table></figure>
+<p><a href="https://github.com/sstephenson/rbenv" target="_blank" rel="external">https://github.com/sstephenson/rbenv</a> にあるとおりやる。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">% git clone https://github.com/sstephenson/rbenv.git ~/.rbenv</div><div class="line">% echo &apos;export PATH=&quot;$HOME/.rbenv/bin:$PATH&quot;&apos; &gt;&gt; ~/.bash_profile</div><div class="line">% echo &apos;eval &quot;$(rbenv init -)&quot;&apos; &gt;&gt; ~/.bash_profile</div><div class="line">open new terminal</div><div class="line">% rbenv</div><div class="line"></div><div class="line">% git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build</div><div class="line">% rbenv install 2.1.4</div><div class="line">% rbenv rehash</div><div class="line">% rbenv global 2.1.4</div><div class="line">% rbenv versions</div></pre></td></tr></table></figure>
+<p>% sudo yum install ruby-devel もしておく。</p>
+<h2 id="その他開発環境のセットアップ"><a href="#その他開発環境のセットアップ" class="headerlink" title="その他開発環境のセットアップ"></a>その他開発環境のセットアップ</h2><h3 id="yum-install"><a href="#yum-install" class="headerlink" title="yum install"></a>yum install</h3><ul>
+<li>tree</li>
+<li>wget</li>
+<li>curl</li>
+<li>ruby-devel</li>
+</ul>
+<h3 id="git"><a href="#git" class="headerlink" title="git"></a>git</h3><p>yum で入る git は 1.7.x と古い（–orhpan が使えない）ので 1.8 を入れる。<br>ただしインストールに時間がかかる。</p>
+<p><a href="https://blog.yug1224.com/archives/563d9b67bf652a600632d022" target="_blank" rel="external"> wget https://git-core.googlecode.com/files/git-1.8.5.3.tar.gz</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ sudo yum install -y zlib-devel perl-devel gettext gcc curl-devel</div><div class="line">$ wget https://git-core.googlecode.com/files/git-1.8.5.3.tar.gz</div><div class="line">$ tar xfvz git-1.8.5.3.tar.gz</div><div class="line">$ cd git-1.8.5.3; ./configure; make</div><div class="line">$ sudo make install</div><div class="line">$ git --version</div></pre></td></tr></table></figure>
+<h3 id="gems"><a href="#gems" class="headerlink" title="gems"></a>gems</h3><p>gem install bundle</p>
+<h3 id="heroku"><a href="#heroku" class="headerlink" title="heroku"></a>heroku</h3><p><a href="https://toolbelt.heroku.com/" target="_blank" rel="external">https://toolbelt.heroku.com/</a> より “standalone”でインストール。<br>‘readline’ がないとか言われた場合は、<br>gem install rb-readline<br>する。</p>
+<h3 id="timezone-の設定"><a href="#timezone-の設定" class="headerlink" title="timezone の設定"></a>timezone の設定</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cp -p  /usr/share/zoneinfo/Japan /etc/localtime</div></pre></td></tr></table></figure>
+<h2 id="共有フォルダ"><a href="#共有フォルダ" class="headerlink" title="共有フォルダ"></a>共有フォルダ</h2><p>vagrant の sync 機能を使って local と remote の src/ を共有する：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">% vi Vagrant</div><div class="line">  ...</div><div class="line">  config.vm.synced_folder &quot;~/src&quot;, &quot;/home/vagrant/src&quot;</div><div class="line">  ...</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/software/development-environment.html" data-id="cizo02863001t80pvexdydrq3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/hexo/software/jekyll-bootstrap.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          jekyll bootstrap + github pages でブログ運用
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/figureskating/">figureskating</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/hobby/">hobby</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/">software</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/hexo/">hexo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/">ゲーム</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/WoT/">WoT</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/">艦これ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/イベント/">イベント</a></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/SSG/">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/kancolle/">kancolle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/middleman/">middleman</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/vagrant/">vagrant</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/hexo/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/hexo/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/hexo/tags/kancolle/" style="font-size: 10px;">kancolle</a> <a href="/hexo/tags/middleman/" style="font-size: 20px;">middleman</a> <a href="/hexo/tags/vagrant/" style="font-size: 10px;">vagrant</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/03/">March 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/01/">January 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2014/11/">November 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo/software/hexo-vagrant.html">HEXO を vagrant 上で使ってみる</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/hugo-vagrant.html">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/figureskating/cheat_sheet.html">フィギュアスケート・チートシート</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/game/kancolle/event/2017-winter.html">2017冬イベント「光作戦」</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/middleman/v4-resources-collection.html">middleman v4 の collection と resources 機能を使ってみる</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo/" class="mobile-nav-link">Home</a>
+  
+    <a href="/hexo/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/hexo/fancybox/jquery.fancybox.css">
+  <script src="/hexo/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/hexo/js/script.js"></script>
+
+  </div>
+</body>
+</html>

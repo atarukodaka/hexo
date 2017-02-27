@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>middlemanページの目次を作る | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="設定markdown エンジンとして redcarpet を使い、:with_toc_data を true にセットします。
+123% vi config.rbset :markdown_engine, :redcarpetset :markdown, :fenced_code_blocks =&amp;gt; true, :autolink =&amp;gt; true, :smartypants =&amp;gt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="middlemanページの目次を作る">
+<meta property="og:url" content="http://atarukodaka.github.io/hexo/software/middleman/redcarpet-toc.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="設定markdown エンジンとして redcarpet を使い、:with_toc_data を true にセットします。
+123% vi config.rbset :markdown_engine, :redcarpetset :markdown, :fenced_code_blocks =&amp;gt; true, :autolink =&amp;gt; true, :smartypants =&amp;gt;">
+<meta property="og:updated_time" content="2017-02-27T05:34:49.284Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="middlemanページの目次を作る">
+<meta name="twitter:description" content="設定markdown エンジンとして redcarpet を使い、:with_toc_data を true にセットします。
+123% vi config.rbset :markdown_engine, :redcarpetset :markdown, :fenced_code_blocks =&amp;gt; true, :autolink =&amp;gt; true, :smartypants =&amp;gt;">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/hexo/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo/">Home</a>
+        
+          <a class="main-nav-link" href="/hexo/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://atarukodaka.github.io/hexo"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-software/middleman/redcarpet-toc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/software/middleman/redcarpet-toc.html" class="article-date">
+  <time datetime="2015-03-22T15:00:00.000Z" itemprop="datePublished">2015-03-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      middlemanページの目次を作る
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h2><p>markdown エンジンとして redcarpet を使い、:with_toc_data を true にセットします。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">% vi config.rb</div><div class="line">set <span class="symbol">:markdown_engine</span>, <span class="symbol">:redcarpet</span></div><div class="line">set <span class="symbol">:markdown</span>, <span class="symbol">:fenced_code_blocks</span> =&gt; <span class="literal">true</span>, <span class="symbol">:autolink</span> =&gt; <span class="literal">true</span>, <span class="symbol">:smartypants</span> =&gt; <span class="literal">true</span>, <span class="symbol">:tables</span> =&gt; <span class="literal">true</span>, <span class="symbol">:with_toc_data</span> =&gt; <span class="literal">true</span></div></pre></td></tr></table></figure>
+<h2 id="ヘルパー関数"><a href="#ヘルパー関数" class="headerlink" title="ヘルパー関数"></a>ヘルパー関数</h2><p>ヘルパー関数を加えます。上記設定がされてる必要があります。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">% vi config.rb</div><div class="line">helpers <span class="keyword">do</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">render_toc</span><span class="params">(page)</span></span></div><div class="line">    <span class="keyword">if</span> config.markdown_engine == <span class="symbol">:redcarpet</span> &amp;&amp; config.markdown[<span class="symbol">:with_toc_data</span>]</div><div class="line">      toc = Redcarpet::Markdown.new(Redcarpet::Render::HTML_TOC)</div><div class="line">      text = File.read(page.source_file)</div><div class="line">      toc.render(text)</div><div class="line">    <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<h2 id="partial-template"><a href="#partial-template" class="headerlink" title="partial template"></a>partial template</h2><p>パーシャルテンプレートを作ります。bootstrap を使ってることを想定してます。<br>ページのfrontmatter に “show_toc: true” としておくと、最初から目次を表示します。<br>そうでなければボタンを押したら表示。</p>
+<p>後はお好みのテンプレートで partial(“partials/toc”) してください。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">% vi source/partials/_toc.html</div><div class="line">&lt;% page ||= current_page %&gt;</div><div class="line">    &lt;!-- toc --&gt;</div><div class="line">    &lt;% toc_class = (page.data.show_toc) ? "collapse in" : "collapse" %&gt;</div><div class="line"></div><div class="line">    &lt;aside class="toc"&gt;</div><div class="line">      &lt;button type="button" class="btn btn-default collapsed btn-sm" data-toggle="collapse" data-target="#toc_content"&gt;ToC&lt;/button&gt;</div><div class="line">      </div><div class="line">      &lt;div id="toc_content" class="&lt;%= toc_class %&gt;"&gt;</div><div class="line">      &lt;% if toc = render_toc(current_article) %&gt;</div><div class="line">	    &lt;%= toc %&gt;</div><div class="line">      &lt;% else %&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">redcarpet :with_toc_data needs to be available. add into config.rb as below</div><div class="line">&lt;pre class="highlight syntax ruby"&gt;&lt;code&gt;set :markdown_engine, &lt;strong&gt;:redcarpet&lt;/strong&gt;</div><div class="line">set :markdown, :fenced_code_blocks =&gt; true, :autolink =&gt; true, :smartypants =&gt; true, :tables =&gt; true, &lt;strong&gt;:with_toc_data =&gt; true&lt;/strong&gt;</div><div class="line">&lt;/code&gt;&lt;/pre&gt;</div><div class="line">         &lt;/div&gt;</div><div class="line">      &lt;% end %&gt;</div><div class="line">	&lt;/div&gt;</div><div class="line">    &lt;/aside&gt;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/software/middleman/redcarpet-toc.html" data-id="cizo02874003780pv0cen1vfp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/hexo/software/middleman/extension.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Middleman の extensionを書くための覚書
+        
+      </div>
+    </a>
+  
+  
+    <a href="/hexo/software/middleman/explore_middleman-01.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">middleman を読む</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/figureskating/">figureskating</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/hobby/">hobby</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/">software</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/hexo/">hexo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/">ゲーム</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/WoT/">WoT</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/">艦これ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/イベント/">イベント</a></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/SSG/">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/kancolle/">kancolle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/middleman/">middleman</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/vagrant/">vagrant</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/hexo/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/hexo/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/hexo/tags/kancolle/" style="font-size: 10px;">kancolle</a> <a href="/hexo/tags/middleman/" style="font-size: 20px;">middleman</a> <a href="/hexo/tags/vagrant/" style="font-size: 10px;">vagrant</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/03/">March 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/01/">January 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2014/11/">November 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo/software/hexo-vagrant.html">HEXO を vagrant 上で使ってみる</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/hugo-vagrant.html">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/figureskating/cheat_sheet.html">フィギュアスケート・チートシート</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/game/kancolle/event/2017-winter.html">2017冬イベント「光作戦」</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/middleman/v4-resources-collection.html">middleman v4 の collection と resources 機能を使ってみる</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo/" class="mobile-nav-link">Home</a>
+  
+    <a href="/hexo/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/hexo/fancybox/jquery.fancybox.css">
+  <script src="/hexo/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/hexo/js/script.js"></script>
+
+  </div>
+</body>
+</html>

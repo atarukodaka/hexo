@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>middleman を読む | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="サンプルスクリプトを書くpath: “/index.html” リクエストで source/index.html.md を HTML に変換するスクリプトを書いてみます：
+1234567891011121314151617181920212223242526% vi m.rbrequire &apos;middleman&apos;require &apos;middleman-core/logger&apos;require &apos;pry">
+<meta property="og:type" content="article">
+<meta property="og:title" content="middleman を読む">
+<meta property="og:url" content="http://atarukodaka.github.io/hexo/software/middleman/susume/08-memo.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="サンプルスクリプトを書くpath: “/index.html” リクエストで source/index.html.md を HTML に変換するスクリプトを書いてみます：
+1234567891011121314151617181920212223242526% vi m.rbrequire &apos;middleman&apos;require &apos;middleman-core/logger&apos;require &apos;pry">
+<meta property="og:updated_time" content="2017-02-27T05:34:49.297Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="middleman を読む">
+<meta name="twitter:description" content="サンプルスクリプトを書くpath: “/index.html” リクエストで source/index.html.md を HTML に変換するスクリプトを書いてみます：
+1234567891011121314151617181920212223242526% vi m.rbrequire &apos;middleman&apos;require &apos;middleman-core/logger&apos;require &apos;pry">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/hexo/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo/">Home</a>
+        
+          <a class="main-nav-link" href="/hexo/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://atarukodaka.github.io/hexo"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-software/middleman/susume/08-memo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/software/middleman/susume/08-memo.html" class="article-date">
+  <time datetime="2015-03-18T15:00:00.000Z" itemprop="datePublished">2015-03-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      middleman を読む
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="サンプルスクリプトを書く"><a href="#サンプルスクリプトを書く" class="headerlink" title="サンプルスクリプトを書く"></a>サンプルスクリプトを書く</h3><p>path: “/index.html” リクエストで source/index.html.md を HTML に変換するスクリプトを書いてみます：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">% vi m.rb</div><div class="line"><span class="keyword">require</span> <span class="string">'middleman'</span></div><div class="line"><span class="keyword">require</span> <span class="string">'middleman-core/logger'</span></div><div class="line"><span class="keyword">require</span> <span class="string">'pry-byebug'</span></div><div class="line"></div><div class="line">logger = Middleman::Logger.singleton(Logger::DEBUG)</div><div class="line"></div><div class="line">logger.debug <span class="string">'- define MyApp'</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyApp</span> &lt; Middleman::Application</span></div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">logger.debug <span class="string">'- create app: MyApp'</span></div><div class="line">app = MyApp.new</div><div class="line"></div><div class="line">logger.debug <span class="string">'- run_hook :ready'</span></div><div class="line">app.run_hook <span class="symbol">:ready</span></div><div class="line"></div><div class="line">logger.debug <span class="string">'- find index.html'</span></div><div class="line">path = <span class="string">"/index.html"</span></div><div class="line">page = app.sitemap.find_resource_by_path(path)</div><div class="line"></div><div class="line">logger.debug <span class="string">'- render'</span></div><div class="line">puts page.render</div><div class="line"></div><div class="line">logger.debug <span class="string">'- all done.'</span></div></pre></td></tr></table></figure>
+<p>実行します：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">% bundle exec ruby m.rb</div><div class="line">- define MyApp</div><div class="line">- create app: MyApp</div><div class="line">== Activating: sprockets</div><div class="line">== Reading:  Local config</div><div class="line">Loaded extensions:</div><div class="line">== Extension: sprockets</div><div class="line">== Extension: frontmatter</div><div class="line">- run_hook :ready</div><div class="line">== File Change: config.rb</div><div class="line">== File Change: m.rb</div><div class="line">== File Change: m.txt</div><div class="line">== File Change: source/images/background.png</div><div class="line">== File Change: source/images/middleman.png</div><div class="line">== File Change: source/index.html.erb</div><div class="line">== File Change: source/javascripts/all.js</div><div class="line">== File Change: source/layouts/layout.erb</div><div class="line">== File Change: source/stylesheets/all.css</div><div class="line">== File Change: source/stylesheets/normalize.css</div><div class="line">== Rebuilding resource list</div><div class="line">- find index.html</div><div class="line">- render</div><div class="line">&lt;!doctype html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">  &lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;utf-8&quot;&gt;</div><div class="line">....</div><div class="line">- all done.</div></pre></td></tr></table></figure>
+<p>ポイントは、</p>
+<ul>
+<li>Middleman::Application の派生クラスのインスタンスを生成すると、extensions の読み込み、activate や local config の読み込みが行われる</li>
+<li>:ready フックを run することで実際の resources の読み込みが行われる<ul>
+<li>このフックを起動しないとリソースの読み込みは完全に行われない</li>
+</ul>
+</li>
+</ul>
+<p>extensions の仕組みや、resources の読み込みの過程を洗ってみます。</p>
+<h2 id="参考サイト"><a href="#参考サイト" class="headerlink" title="参考サイト"></a>参考サイト</h2><p><a href="https://github.com/yterajima/middleman-tansu" target="_blank" rel="external">https://github.com/yterajima/middleman-tansu</a><br><a href="http://jwb.io/20130219-wiki-like-automatic-linking-in-middleman.html" target="_blank" rel="external">Wiki-like automatic linking in Middleman</a></p>
+<p><a href="http://blog.cloudninja.asia/?p=5245" target="_blank" rel="external">MiddlemanのExtensionやTemplateを色々と試しました</a><br><a href="http://blogged.e2esound.com/2015/01/31/middleman-tansu_v0-1-0_is_released/" target="_blank" rel="external">Middlemanでwikiっぽいことができたら便利だなと思ったからmiddleman-tansu v0.1.0をリリースした | e2esound.com業務日誌</a></p>
+<h2 id="gem"><a href="#gem" class="headerlink" title="gem"></a>gem</h2><p>middleman-pry</p>
+<ul>
+<li>カスタマイズ<ul>
+<li>CSS: style.css</li>
+</ul>
+</li>
+</ul>
+<h1 id="template-aks-の構成と説明"><a href="#template-aks-の構成と説明" class="headerlink" title="template-aks の構成と説明"></a>template-aks の構成と説明</h1><ul>
+<li>layout</li>
+<li>helpers</li>
+<li>extentions</li>
+</ul>
+<h1 id="middlelamn-core-を読み解く"><a href="#middlelamn-core-を読み解く" class="headerlink" title="middlelamn-core を読み解く"></a>middlelamn-core を読み解く</h1><ul>
+<li>Middleman::Application<ul>
+<li>define_hook する：:before, :ready, :before_build, :after_build</li>
+<li>include Middleman::Coreextensions::Extensions<ul>
+<li>=&gt; register() が使えるように成る</li>
+</ul>
+</li>
+<li>register Middleman::CoreExtensions::Request, FileWacher,Data., Middleman::Sitemap<ul>
+<li>=&gt; class なら extension.new、module などなら extension.registered(self) を呼ぶ</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Middleman::Application.new<ul>
+<li>build cmd なら Middleman::BuildAction.new() で base.class.shared_instance で new される<ul>
+<li>リクエスト毎に Middleman::Application から派生されたクラスを作り、そこから new する</li>
+</ul>
+</li>
+<li>register したときに、Middleman::CoreExtensions::*:registered で InstanceMethod module 内の関数（initialize()含む）を  app に include するよう send してるため、それぞれの initialize が呼ばれる<ul>
+<li>initialized() を持ってるのはData, Extensions のみ</li>
+<li>各種 extensions で hook などを設定</li>
+<li>Extensions.new<ul>
+<li>initialized, before_configuration hook を呼ぶ</li>
+<li>“config.rb” を実行する<ul>
+<li>activate する<ul>
+<li>extensions に登録</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>after_configuration hook を呼ぶ</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>require middleman</li>
+<li><p>require middleman-core</p>
+</li>
+<li><p>application.rb</p>
+</li>
+</ul>
+<p>conf.rb</p>
+<p>core-extensions/data<br> InstanseMethod<br>  initialize: load config.rb</p>
+<p>register<br>initialize<br>activate<br>after_configulation</p>
+<h1 id="sitemap-を読み解く"><a href="#sitemap-を読み解く" class="headerlink" title="sitemap を読み解く"></a>sitemap を読み解く</h1><ul>
+<li>build<br><a href="https://github.com/middleman/middleman/blob/v3-stable/middleman-core/lib/middleman-core/cli/build.rb" target="_blank" rel="external">https://github.com/middleman/middleman/blob/v3-stable/middleman-core/lib/middleman-core/cli/build.rb</a><br>Thor</li>
+</ul>
+<h1 id="middleman-blog-を読み解く"><a href="#middleman-blog-を読み解く" class="headerlink" title="middleman-blog を読み解く"></a>middleman-blog を読み解く</h1><ul>
+<li>BlogData</li>
+<li>BlogArticle</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/software/middleman/susume/08-memo.html" data-id="cizo0287g003c80pv98iw5pjg" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/hexo/tags/middleman/">middleman</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/hexo/software/middleman/explore_middleman-01.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          middleman を読む
+        
+      </div>
+    </a>
+  
+  
+    <a href="/hexo/software/middleman/susume/03-customize.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">カスタマイズ</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/figureskating/">figureskating</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/hobby/">hobby</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/">software</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/hexo/">hexo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/">ゲーム</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/WoT/">WoT</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/">艦これ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/イベント/">イベント</a></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/SSG/">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/kancolle/">kancolle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/middleman/">middleman</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/vagrant/">vagrant</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/hexo/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/hexo/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/hexo/tags/kancolle/" style="font-size: 10px;">kancolle</a> <a href="/hexo/tags/middleman/" style="font-size: 20px;">middleman</a> <a href="/hexo/tags/vagrant/" style="font-size: 10px;">vagrant</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/03/">March 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/01/">January 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2014/11/">November 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo/software/hexo-vagrant.html">HEXO を vagrant 上で使ってみる</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/hugo-vagrant.html">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/figureskating/cheat_sheet.html">フィギュアスケート・チートシート</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/game/kancolle/event/2017-winter.html">2017冬イベント「光作戦」</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/middleman/v4-resources-collection.html">middleman v4 の collection と resources 機能を使ってみる</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo/" class="mobile-nav-link">Home</a>
+  
+    <a href="/hexo/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/hexo/fancybox/jquery.fancybox.css">
+  <script src="/hexo/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/hexo/js/script.js"></script>
+
+  </div>
+</body>
+</html>

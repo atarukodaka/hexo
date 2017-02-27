@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://atarukodaka.github.io/hexo/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/hexo/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo/">Home</a>
+        
+          <a class="main-nav-link" href="/hexo/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://atarukodaka.github.io/hexo"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-software/hexo-vagrant" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/software/hexo-vagrant.html" class="article-date">
+  <time datetime="2017-02-26T15:00:00.000Z" itemprop="datePublished">2017-02-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/hexo/categories/software/">software</a>►<a class="article-category-link" href="/hexo/categories/software/hexo/">hexo</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo/software/hexo-vagrant.html">HEXO を vagrant 上で使ってみる</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="HEXO"><a href="#HEXO" class="headerlink" title="HEXO"></a>HEXO</h2><p>今まで middleman に手を加えてサイトを作ってたのですが、<br>ビルドが遅かったりなんで HEXO を試してみたら速いしよさげ。</p>
+<h2 id="インストール"><a href="#インストール" class="headerlink" title="インストール"></a>インストール</h2><h3 id="nvmを入れる"><a href="#nvmを入れる" class="headerlink" title="nvmを入れる"></a>nvmを入れる</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash</div><div class="line">$ <span class="built_in">exit</span></div><div class="line">% vagrant ssh</div><div class="line">$ nvm --version</div><div class="line">0.33.1</div></pre></td></tr></table></figure>
+<h3 id="node-js-を入れる"><a href="#node-js-を入れる" class="headerlink" title="node.js を入れる"></a>node.js を入れる</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ nvm install stable</div></pre></td></tr></table></figure>
+<h3 id="hexo-を入れる"><a href="#hexo-を入れる" class="headerlink" title="hexo を入れる"></a>hexo を入れる</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ nvm install hexo-cli -g</div></pre></td></tr></table></figure>
+<h2 id="プロジェクトを作成する"><a href="#プロジェクトを作成する" class="headerlink" title="プロジェクトを作成する"></a>プロジェクトを作成する</h2><p>共有フォルダ上だとシンボリックリンクのエラーが出るので、それ以外でやる。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">% hexo init proj</div></pre></td></tr></table></figure>
+<h3 id="ソースファイルを共有フォルダにする"><a href="#ソースファイルを共有フォルダにする" class="headerlink" title="ソースファイルを共有フォルダにする"></a>ソースファイルを共有フォルダにする</h3><p>_config.yml をいじる：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># Directory</div><div class="line">#source_dir: source</div><div class="line">source_dir: /home/vagrant/src/hexo/source</div><div class="line">public_dir: public</div></pre></td></tr></table></figure>
+<h2 id="参考サイト"><a href="#参考サイト" class="headerlink" title="参考サイト"></a>参考サイト</h2><ul>
+<li><a href="http://blog.walfo.jp/vagrant-nvm-install/" target="_blank" rel="external">Vagrant, nvm と Node.js をインストールする – Supertrue</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/software/hexo-vagrant.html" data-id="cizo0285z001q80pvoechx6vl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/hexo/tags/SSG/">SSG</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/hexo/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/hexo/tags/vagrant/">vagrant</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-software/hugo-vagrant" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/software/hugo-vagrant.html" class="article-date">
+  <time datetime="2017-02-25T15:00:00.000Z" itemprop="datePublished">2017-02-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><a href="https://golang.org/dl/" target="_blank" rel="external">https://golang.org/dl/</a> から go1.8.linux-amd64.tar.gz を展開し go/bin に path を通す。<br>-展開先は、/usr/local か、それ以外なら $GOROOT を設定</li>
+<li>git clone <a href="https://github.com/spf13/hugo" target="_blank" rel="external">https://github.com/spf13/hugo</a> を入手し cd hugo; go get</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/software/hugo-vagrant.html" data-id="cizo02861001r80pvqkpx3j7c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-figureskating/cheat_sheet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/figureskating/cheat_sheet.html" class="article-date">
+  <time datetime="2017-02-21T15:00:00.000Z" itemprop="datePublished">2017-02-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/hexo/categories/figureskating/">figureskating</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo/figureskating/cheat_sheet.html">フィギュアスケート・チートシート</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="チートシート"><a href="#チートシート" class="headerlink" title="チートシート"></a>チートシート</h2><p>チートシートとは、いわゆるカンニングペーパーのことで、覚えておくべき、でも忘れてしまいがちな事項を一枚紙にまとめておくものです（プログラミング等でよく用いられる）。</p>
+<p>フィギュアスケート（のルール）の場合、基礎点や要件、レベル特徴など、年々変更されるため覚えておくのが難しく、それらをまとめていつでも参照できるようペーパーを作ってみました。</p>
+<p>内容としては、以下のとおり：</p>
+<ul>
+<li>vol.1: ジャンプ規定</li>
+<li>vol.2: スピン規定</li>
+<li>vol.3: ステップ規定、PCS</li>
+</ul>
+<p>文字数やスペースの関係でかなり説明を省いており、正確性には欠けますので、必要に応じてハンドブック等を確認してください。<br>修正コメント等は <a href="http://www.twitter.com/ataru_kodaka" target="_blank" rel="external">@ataru_kodaka</a> まで。</p>
+<h2 id="2016-17年シーズン準拠版"><a href="#2016-17年シーズン準拠版" class="headerlink" title="2016-17年シーズン準拠版"></a>2016-17年シーズン準拠版</h2><h3 id="PDF："><a href="#PDF：" class="headerlink" title="PDF："></a>PDF：</h3><p>[<a href="/images/figureskating_cheet_sheet_2016-17_ver1.05.pdf">フィギュアスケート・チートシート2016-17準拠PDF版ver1.05</a> (PDF:760KB)]</p>
+<h3 id="画像："><a href="#画像：" class="headerlink" title="画像："></a>画像：</h3><p>&lt;% 1.upto(3).each do |i| %&gt;</p>
+<p><div style="float: left; "><br>&lt;% url = “/images/cheat_sheet_vol#{i}.png” %&gt;<br><a href="<%= url %>"><img src="<%= url %>" width="200"></a><br></div><br>&lt;% end %&gt;<br><br clear="all"><br><br></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/figureskating/cheat_sheet.html" data-id="cizo0283w000580pv4cvrwbxn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-game/kancolle/event/2017-winter" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/game/kancolle/event/2017-winter.html" class="article-date">
+  <time datetime="2017-02-15T15:00:00.000Z" itemprop="datePublished">2017-02-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/hexo/categories/ゲーム/">ゲーム</a>►<a class="article-category-link" href="/hexo/categories/ゲーム/艦これ/">艦これ</a>►<a class="article-category-link" href="/hexo/categories/ゲーム/艦これ/イベント/">イベント</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo/game/kancolle/event/2017-winter.html">2017冬イベント「光作戦」</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="参考サイト"><a href="#参考サイト" class="headerlink" title="参考サイト"></a>参考サイト</h2><ul>
+<li><a href="http://zekamashi.net/category/201702-event/" target="_blank" rel="external">「☆偵察戦力緊急展開！「光」作戦(2017冬)」の記事一覧 | ぜかましねっと艦これ！</a></li>
+<li><a href="http://akankorebiyori.blog.fc2.com/blog-category-95.html" target="_blank" rel="external">★偵察戦力緊急展開！「光」作戦 | あ艦これ日和　-　艦これ攻略情報,プレイ日記</a></li>
+</ul>
+<h2 id="マップ"><a href="#マップ" class="headerlink" title="マップ"></a>マップ</h2><h3 id="E1乙"><a href="#E1乙" class="headerlink" title="E1乙"></a>E1乙</h3><p>潜水艦隊で３回出撃でサクッとクリア</p>
+<h3 id="E2乙"><a href="#E2乙" class="headerlink" title="E2乙"></a>E2乙</h3><h4 id="削り：輸送"><a href="#削り：輸送" class="headerlink" title="削り：輸送"></a>削り：輸送</h4><p>TP:400</p>
+<ul>
+<li>熊野（司令部）、江風（大発）、皐月（大発ドラム）、霞（大発）、朝潮（大発）、千代田甲（二式水戦）</li>
+<li>鬼怒（20.3x2、大発）、秋月（対空）、潮（10cm高角x2、ドラム）、大潮（10cm高角x2、大発）、プリ、鈴谷（夜偵、照明灯）</li>
+</ul>
+<p>試行：</p>
+<ol>
+<li>A:116</li>
+<li>A:116</li>
+<li>C:0</li>
+<li>A:118</li>
+<li>A:50 →　クリア</li>
+</ol>
+<h4 id="ゲージ破壊：機動部隊"><a href="#ゲージ破壊：機動部隊" class="headerlink" title="ゲージ破壊：機動部隊"></a>ゲージ破壊：機動部隊</h4><ul>
+<li>熊野（司令部）、天城、葛城、雲龍、サトラガ、千代田甲（二式水戦）：対空485-524</li>
+<li>鬼怒（20.3x2、大発）、秋月（対空）、江風（大発）、大潮（10cm高角x2、大発）、プリ、鈴谷（夜偵、照明灯）</li>
+</ul>
+<h3 id="E3乙"><a href="#E3乙" class="headerlink" title="E3乙"></a>E3乙</h3><ul>
+<li>彩雲輸送：潜水艦６（紫雲２）w/決戦支援</li>
+<li>ギミック解除：I:潜水艦６</li>
+<li>ゲージ削り、攻略<ul>
+<li>戦艦４、ちよちと</li>
+<li>阿武隈、綾波、摩耶、夕立、妙高、北上</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/game/kancolle/event/2017-winter.html" data-id="cizo0287i003f80pvqjntb3f6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-software/middleman/v4-resources-collection" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/software/middleman/v4-resources-collection.html" class="article-date">
+  <time datetime="2017-02-15T15:00:00.000Z" itemprop="datePublished">2017-02-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo/software/middleman/v4-resources-collection.html">middleman v4 の collection と resources 機能を使ってみる</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>middlemn v4 では resources と collection というのが導入されたらしいのですが、<a href="https://middlemanapp.com/jp/basics/upgrade-v4/#コレクション" target="_blank" rel="external">公式ドキュメント</a>を見てもいまいち分かりにくいです。どうやらわざわざextension で manipulate_resource_list() を使わなくても手軽にリソース操作ができるっぽいですね。</p>
+<h3 id="resources-を使ってみる。"><a href="#resources-を使ってみる。" class="headerlink" title="resources を使ってみる。"></a>resources を使ってみる。</h3><p>とりあえず、すべてのリソースに ‘foo’ というローカル変数を使えるようにしてみます。config.rb に</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">resources.each &#123;<span class="params">|res|</span></div><div class="line">  res.add_metadata(<span class="symbol">locals:</span> &#123;<span class="symbol">foo:</span> <span class="string">"YES! FOO!!!"</span>&#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>と書くだけで、*.html.erb で</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">foo? &lt;%= foo %&gt;</div></pre></td></tr></table></figure>
+<p>と使えるようです。確かに便利ですね。v3ではこれをするのには Middleman::Extension から派生させたクラスを作って manipulate_resource_list() を書いてそのクラスを Middleman::Extensions に register して activate して、、、という手順を踏まなければなりませんでしたから。</p>
+<h3 id="collection-を使ってみる"><a href="#collection-を使ってみる" class="headerlink" title="collection を使ってみる"></a>collection を使ってみる</h3><p>ドキュメントのタグの例題が分かりにくいので、ここでは、<strong>「見てほしい記事に mitene: 100 とかフロントマターにつけて大きい順に表示する」</strong>というのをやってみたいと思います。</p>
+<p>config.rb:</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mitene = resources.select &#123;<span class="params">|r|</span> r.data.mitene &#125;.sort_by &#123;<span class="params">|r|</span> r.data.mitene&#125;.reverse</div><div class="line"></div><div class="line">collection <span class="symbol">:mitene</span>, mitene</div></pre></td></tr></table></figure>
+<p>というふうに、collection() を使って、あるシンボルに対して、<strong>resources から始まるチェーンから作られたオブジェクト</strong>を紐付けしてあげます。そうすると mitene.html.erb でそのシンボルを使って、</p>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>みてね！<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> collection(<span class="symbol">:mitene</span>).each <span class="keyword">do</span> <span class="params">|res|</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> link_to(res.data.title, res) </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> <span class="keyword">end</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>というふうに、集めておいたオブジェクトを呼び出せるようです。</p>
+<p>また、config.rb:</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mitene = resources.select &#123;<span class="params">|r|</span> r.data.mitene &#125;.group_by &#123;<span class="params">|r|</span> r.data.mitene &#125;</div><div class="line">collection <span class="symbol">:mitene</span>, mitene</div></pre></td></tr></table></figure>
+<p>とハッシュにしてあげて</p>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>みてね！順<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> collection(<span class="symbol">:mitene</span>).sort_by &#123;<span class="params">|r, v|</span> r&#125;.reverse.each <span class="keyword">do</span> <span class="params">|key, items|</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> key </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> items.each <span class="keyword">do</span> <span class="params">|res|</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> link_to(res.data.title, res) </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> <span class="keyword">end</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> <span class="keyword">end</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>と受け取ることも出来ます。</p>
+<p>ちょっとリソースに手を加えたり、特定の条件のリソースを集めておいてテンプレートで使うということが手軽にできそうな感じです。</p>
+<p>また分かり次第追記していきます。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/software/middleman/v4-resources-collection.html" data-id="cizo02877003980pvs72k8oiw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-software/middleman/framework_consideration" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/software/middleman/framework_consideration.html" class="article-date">
+  <time datetime="2017-02-03T15:00:00.000Z" itemprop="datePublished">2017-02-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo/software/middleman/framework_consideration.html">フレームワーク構想</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="middleman-ベースで作りたいと思ってること"><a href="#middleman-ベースで作りたいと思ってること" class="headerlink" title="middleman ベースで作りたいと思ってること"></a>middleman ベースで作りたいと思ってること</h2><ul>
+<li>middleman-blog だとソースファイル名に日付をつけることが前提になってるのがイヤ（frontmatterに date: つければいいんだけど）<ul>
+<li>hack してみたけど、あんま美しくならない</li>
+</ul>
+</li>
+<li>game/kancolle/event/2015-summary.html.md をつくると、自動的に game/index.html, game/kancolle/index.html, game/kancolle/event/index.html にサマリー作ってほしい<ul>
+<li><a href="https://github.com/yterajima/middleman-tansu" target="_blank" rel="external">https://github.com/yterajima/middleman-tansu</a> が近い？</li>
+</ul>
+</li>
+<li>デザインは <a href="http://grabacr.net/" target="_blank" rel="external">http://grabacr.net/</a> さんとこがいい感じ</li>
+<li>archives は月別があればいい</li>
+<li>連載記事サポート機能<ul>
+<li>software/middleman/01-ready.html.md, …/02-start.html.md  とかすると title に自動的に 第n回とか入ってほしい</li>
+</ul>
+</li>
+<li>pagination は欲しい</li>
+<li>tag はあんま使わない</li>
+</ul>
+<p>ってんで<br><a href="http://atarukodaka.github.io/software/middleman/middleman-akcms.html">http://atarukodaka.github.io/software/middleman/middleman-akcms.html</a>　<br>のように動くのを akcms と銘打って <a href="https://github.com/atarukodaka/middleman-akcms/" target="_blank" rel="external">https://github.com/atarukodaka/middleman-akcms/</a> としてみたけど、いろいろごちゃごちゃしてきてどうしようかと。</p>
+<h2 id="問題、提案など"><a href="#問題、提案など" class="headerlink" title="問題、提案など"></a>問題、提案など</h2><ul>
+<li>resource にインスタンスをつけたいんだけど、Middleman::Sitemap::Resource 直にモンキーパッチあてるのは避けたいし、<ul>
+<li>manipulate_resource_list() で each resource に extend してもいいんだけど、pagination するときに ProxyResource を new すると extend されてないんでモニョ. clone してもパラメータ上書きできないし</li>
+<li>link template は apply_uri_template するよいか proxy resource へのハッシュを持っておいて link_to() するほうが楽だと思うんがねえ</li>
+</ul>
+</li>
+<li>自動サマリー、タグ、アーカイブ、ペジネーションなどをまとめるとごちゃごちゃするので別にするか<ul>
+<li>タグ、アーカイブは、v4 だと collection 機能でサクッとできるっぽいし</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/software/middleman/framework_consideration.html" data-id="cizo02873003580pv3kjc7znd" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-software/middleman/middleman-akcms" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/software/middleman/middleman-akcms.html" class="article-date">
+  <time datetime="2017-01-26T15:00:00.000Z" itemprop="datePublished">2017-01-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo/software/middleman/middleman-akcms.html">middleman-akcms 文書管理拡張機能のご紹介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>middleman のディレクトリごとのサマリーを自動生成する文書管理システムを拡張機能として作ってみました。</p>
+<p><a href="https://github.com/atarukodaka/middleman-akcms" target="_blank" rel="external">akcms - Ataru Kodaka Content Management System - atarukodaka/middleman-akcms</a></p>
+<p>動作サンプルはこちら：<a href="http://atarukodaka.github.io/">Home - Ataru Kodaka Site</a></p>
+<p>スナップショット：</p>
+<div><br><a href="/images/middleman-akcms-snapshot.png"><img src="/images/middleman-akcms-snapshot.png" alt="スナップショット" style="max-width: 70%"></a><br></div>
+
+<p>foo/bar/baz.html を作成すると、foo/bar/index.html, foo/index.html, index.html といったディレクトリサマリーページを自動生成します。これにより、どのリソースからも parent, children でたどることができるようになります。</p>
+<p>その他、月別アーカイブ、タグ、ペジネーション、breadcrumbなどをサポートします。<br>付属テンプレートでは bootstrap3をサポートします。</p>
+<h2 id="インストールと使いかた"><a href="#インストールと使いかた" class="headerlink" title="インストールと使いかた"></a>インストールと使いかた</h2><p>middleman4 を入れた状態で、テンプレートを指定してプロジェクトを作ります</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ middleman init proj --template git@github.com:atarukodaka/middleman-akcms.git</div></pre></td></tr></table></figure>
+<p>後は通常どおりにprojに入って bundle install し、source/ 以下お好きなようにファイルを作って中身を書き build や server 回します。</p>
+<h3 id="設定"><a href="#設定" class="headerlink" title="設定"></a>設定</h3><h4 id="config-rb"><a href="#config-rb" class="headerlink" title="config.rb"></a>config.rb</h4><p>config.rb にて :akcms を activate し、各種設定をします。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">activate <span class="symbol">:akcms</span> <span class="keyword">do</span> <span class="params">|akcms|</span></div><div class="line">  akcms.layout = <span class="string">"article"</span></div><div class="line"></div><div class="line">  akcms.directory_summary_template = <span class="string">"templates/directory_summary_template.html"</span></div><div class="line">  akcms.archive_month_template = <span class="string">"templates/archive_template.html"</span></div><div class="line">  akcms.tag_template = <span class="string">"templates/tag_template.html"</span></div><div class="line">  akcms.pagination_per_page = <span class="number">10</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>使うレイアウトやテンプレート群を指定してください。<br>ペジネーションのデフォルト表示数/頁も指定できますが、<br>記事ごとに指定することもできます（後述）。</p>
+<h2 id="設計と機能"><a href="#設計と機能" class="headerlink" title="設計と機能"></a>設計と機能</h2><h3 id="記事-Article"><a href="#記事-Article" class="headerlink" title="記事 / Article"></a>記事 / Article</h3><p>以下の特徴を持ったリソースは、記事 (article) とみなされ：</p>
+<ul>
+<li>ignored でないもの</li>
+<li>拡張子が .html あるいは .htm のもの</li>
+<li>type: フロントマターで ‘article’ 以外のものが明示的に指定されていないもの</li>
+</ul>
+<p>以下のメソッドを持ちます：</p>
+<ul>
+<li>title：記事タイトル</li>
+<li>date：日付(TimeWithZoneクラス）。date: フロントマターあるいは更新日時から生成</li>
+<li>summary：サマリー表示</li>
+<li>published?：出力するか。published: false でなければ真</li>
+<li>prev_article：次の記事</li>
+<li>next_article：前の記事</li>
+<li>body：記事本文（レイアウト不使用）</li>
+</ul>
+<p>そして、Middleman::Sitemap::Store クラス(sitemapオブジェクトが生成される）には、以下のインスタンスメソッドが追加されます。</p>
+<ul>
+<li>articles()：全ての article リソース配列（日付逆順ソート済）</li>
+</ul>
+<p>これを使って、</p>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> sitemap.articles.first(<span class="number">10</span>).each <span class="keyword">do</span> <span class="params">|article|</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> link_to(article.title, article) </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> <span class="keyword">end</span></span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>などと最新１０件の記事を表示することができます。</p>
+<p>また、全てのリソースに、以下のメソッドが追加されます：</p>
+<ul>
+<li>is_article?：article かどうか</li>
+<li>to_article!：当該リソースを article 属性を持たせる</li>
+</ul>
+<p>see <a href="https://github.com/atarukodaka/middleman-akcms/blob/master/lib/middleman-akcms/article.rb" target="_blank" rel="external">https://github.com/atarukodaka/middleman-akcms/blob/master/lib/middleman-akcms/article.rb</a></p>
+<h3 id="ディレクトリサマリー-DirectorySummary"><a href="#ディレクトリサマリー-DirectorySummary" class="headerlink" title="ディレクトリサマリー / DirectorySummary"></a>ディレクトリサマリー / DirectorySummary</h3><p>activate の際、テンプレートを指定するとディレクトリサマリー生成機能が稼働します。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">activate <span class="symbol">:akcms</span> <span class="keyword">do</span> <span class="params">|conf|</span></div><div class="line">  conf.directory_summary_template = <span class="string">"templates/directory_summary.html"</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>これにより、例えば foo/bar/baz.html というリソースがあった場合、</p>
+<ul>
+<li>foo/bar/index.html</li>
+<li>foo/index.html</li>
+<li>index.html</li>
+</ul>
+<p>が（存在しなければ）テンプレートに従いプロキシリソースが生成されます。<br>その際、ローカル変数として、</p>
+<ul>
+<li>directory:  当該ディレクトリの情報を保持するname, path メソッドを持つオブジェクト</li>
+<li>articles[]：当該ディレクトリ下にある article のリソース配列</li>
+</ul>
+<p>が渡されるため、</p>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="xml">% cat templates/directory_summary.html.erb</span></div><div class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Directory: <span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> directory.name </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> articles.each <span class="keyword">do</span> <span class="params">|article|</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> link_to(article.title, article) </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> <span class="keyword">end</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>などと当該ディレクトリの記事一覧を作成できます。</p>
+<h4 id="breadcrump"><a href="#breadcrump" class="headerlink" title="breadcrump"></a>breadcrump</h4><p>全てのリソースに、ancestors メソッドが追加されるため、以下のように<br>breadcrumbs を手軽に作ることができます。</p>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;<span class="name">ol</span> <span class="attr">class</span>=<span class="string">"breadcrumb"</span>&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> current_resource.ancestors.reverse.map <span class="keyword">do</span> <span class="params">|res|</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> link_to(res.data.title <span class="params">||</span> res.directory.name, res) </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">%</span></span><span class="ruby"> <span class="keyword">end</span> </span><span class="xml"><span class="tag">%&gt;</span></span></div><div class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"active"</span>&gt;</span>current_resource.data.title<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="foo-config-yml"><a href="#foo-config-yml" class="headerlink" title="foo/config.yml"></a>foo/config.yml</h4><p>あるディレクトリに “directory_name: “というエントリを持つ config.yml が存在する場合、<br>resource.directory.name はその値が入ります。</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cat source/foo/config.yml</div><div class="line"><span class="attr">directory_name:</span> フー</div></pre></td></tr></table></figure>
+<figure class="highlight erb"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="xml">$ cat source/foo/index.html.erb</span></div><div class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>directory: <span class="tag">&lt;<span class="name">%=</span></span><span class="ruby"> current_resource.directory.name </span><span class="xml"><span class="tag">%&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span> <span class="comment">&lt;!-- 'フー' と表示される --&gt;</span></span></div></pre></td></tr></table></figure>
+<h3 id="タグ"><a href="#タグ" class="headerlink" title="タグ"></a>タグ</h3><p>options.tag_template</p>
+<ul>
+<li>resource.tags: 当該リソースのタグ配列</li>
+<li>sitemap.tags：タグ=&gt;プロキシリソースのハッシュ</li>
+</ul>
+<h3 id="アーカイブ"><a href="#アーカイブ" class="headerlink" title="アーカイブ"></a>アーカイブ</h3><p>options.archive_month_template</p>
+<ul>
+<li>sitemap.archives：日付(TimeWithZone)=&gt;プロキシリソースのハッシュ</li>
+</ul>
+<h3 id="ペジネーション"><a href="#ペジネーション" class="headerlink" title="ペジネーション"></a>ペジネーション</h3><ul>
+<li>pagination?：ヘルパ関数</li>
+<li>current_resource.paginator：<ul>
+<li>page_number</li>
+<li>num_pages</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+<h3 id="シリーズ機能"><a href="#シリーズ機能" class="headerlink" title="シリーズ機能"></a>シリーズ機能</h3><p>options.series_title_template</p>
+<p>config.yml</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">series:</span> シリーズ名</div></pre></td></tr></table></figure>
+<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><h3 id="emacs"><a href="#emacs" class="headerlink" title=".emacs"></a>.emacs</h3><p>.emacs や .emacs.d/init.el に</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">(require &apos;autoinsert)</div><div class="line">(add-hook &apos;find-file-hooks &apos;auto-insert)</div><div class="line">(setq auto-insert-query nil)</div><div class="line">(setq auto-insert-alist </div><div class="line">      &apos;((&quot;\\.html\\.md$&quot; . frontmatter-skeleton)</div><div class="line">	  (&quot;\\.html\\.md\\.erb$&quot; . frontmatter-skeleton)))</div><div class="line"></div><div class="line">;; middleman-blog: article-front matter</div><div class="line">(defun insert-article-frontmatter ()</div><div class="line">  (interactive)</div><div class="line">  (insert (concat &quot;---\ntitle: \ndate: &quot; (format-time-string &quot;%Y-%m-%d&quot;) &quot;\n\n---\n&quot;)))</div><div class="line">(define-key global-map &quot;\C-ca&quot; &apos;insert-article-frontmatter)</div></pre></td></tr></table></figure>
+<p>とやっておくと便利です。</p>
+<h4 id="data-config-yml"><a href="#data-config-yml" class="headerlink" title="data/config.yml"></a>data/config.yml</h4><p>著者名や著者・サイト情報をYAMLで記述します。テンプレートで data.config.author などと取れます。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/software/middleman/middleman-akcms.html" data-id="cizo02875003880pvkjfwo50d" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-figureskating/practise/howtostart" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/figureskating/practise/howtostart.html" class="article-date">
+  <time datetime="2017-01-10T15:00:00.000Z" itemprop="datePublished">2017-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo/figureskating/practise/howtostart.html">スケートを始める話</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="始めてみる編"><a href="#始めてみる編" class="headerlink" title="始めてみる編"></a>始めてみる編</h2><h3 id="スケートを始めるには？"><a href="#スケートを始めるには？" class="headerlink" title="スケートを始めるには？"></a>スケートを始めるには？</h3><p>お近くのリンクのスケート教室に申し込むのが一番です。独学だと変な癖がつくし危険なので、最初は基礎を習った方がよいです。</p>
+<h3 id="教室が満員でなかなか入れない"><a href="#教室が満員でなかなか入れない" class="headerlink" title="教室が満員でなかなか入れない"></a>教室が満員でなかなか入れない</h3><p>リンクや時期によってはウェイティングリストが長くなることもあるようです。<br>…</p>
+<h3 id="リンクはどこにある？"><a href="#リンクはどこにある？" class="headerlink" title="リンクはどこにある？"></a>リンクはどこにある？</h3><p>首都圏だと、フルシーズンで神宮、高田馬場シチズン、東伏見、東大和、上尾、銀河など。<br>冬季のみは赤坂サカス、六本木、など。いずれもリンクは小さいです。</p>
+<h3 id="服装は？"><a href="#服装は？" class="headerlink" title="服装は？"></a>服装は？</h3><p>塗れても大丈夫な動きやすいもの。上はTシャツにパーカーなどを羽織り、下はダボダボしてないジャージのパンツなど。スエットだと濡れが残るしダボつくので避けた方が吉。下にヒートテック的な股引をはくとよいですね。</p>
+<p>そのうち専用のスケートパンツやスカートを用意しましょう。リンク付属の専門店やアイススペースなどで売ってます。</p>
+<p>手袋は必須。リンクで売ってます。</p>
+<h3 id="靴は買った方がよい？"><a href="#靴は買った方がよい？" class="headerlink" title="靴は買った方がよい？"></a>靴は買った方がよい？</h3><p>コーチと要相談ですが、教室に何回か通った後、続けられそうであれば早めに揃えた方がいいでしょう。貸し靴はエッジも甘いしブーツもよれてるので滑りにくく、余計にうまく滑れません。</p>
+<h3 id="どの靴がいい？"><a href="#どの靴がいい？" class="headerlink" title="どの靴がいい？"></a>どの靴がいい？</h3><p>これもコーチと相談ですが、ブーツは小杉やオオタ、マルジュウなどの国産革製のほうが足になじんでよいです。軽いプラスチックのものは耐久性に欠けるし馴染みにくいので避けたほうがよいかと。トリプルを飛ぶのに軽さを求め、頻繁に靴を変える選手ならともかく、大人スケーターは多少重くとも革製が無難です。</p>
+<p>ブレードはコロネーションエース一択でしょう。シールやパターンはまだ先です。入門用のセット靴はお勧めしません。</p>
+<h2 id="滑ってみる"><a href="#滑ってみる" class="headerlink" title="滑ってみる"></a>滑ってみる</h2><h3 id="とりあえずどうすればいいの？"><a href="#とりあえずどうすればいいの？" class="headerlink" title="とりあえずどうすればいいの？"></a>とりあえずどうすればいいの？</h3><p>…</p>
+<ul>
+<li>ペンギンツー</li>
+<li>ひょうたん</li>
+<li>交互に</li>
+</ul>
+<h3 id="転ぶのが怖いんだけど、、"><a href="#転ぶのが怖いんだけど、、" class="headerlink" title="転ぶのが怖いんだけど、、"></a>転ぶのが怖いんだけど、、</h3><p>転ぶときは転ぶので、安全な転び方を会得しましょう。</p>
+<p>あ、ヤバい、とバランスを崩したら、体を捻って体を丸めつつ横に倒れましょう。頭を打つのが一番怖いです。</p>
+<p>手で支えようとしないこと。下手に手を出すとポキッと折れます。</p>
+<h3 id="立ち上がれない、、"><a href="#立ち上がれない、、" class="headerlink" title="立ち上がれない、、"></a>立ち上がれない、、</h3><p>四つんばになります。片膝をついて、近くに人がいればそれに掴まりつつ、もう片方の足を出して立ち上がります。慣れれば大したことありません。</p>
+<p>人とぶつかりそうで怖い<br>小さい子供やヨタヨタしてるレジャー客からは距離を取りましょう。周りの人がどっちに滑ろうとしてるのかを見つつ、突然その人が転んでも避けられる距離とスピードで滑ること。</p>
+<p>うまい選手は勝手に避けてくれますが、脇をスピードを出してすり抜けられるのは怖いので、あまりに危ない時はスタッフに言って注意してもらいましょう。ホッケー少年が鬼ごっこしてるときがあります。</p>
+<h3 id="ひょうたんがうまくできない"><a href="#ひょうたんがうまくできない" class="headerlink" title="ひょうたんがうまくできない"></a>ひょうたんがうまくできない</h3><p>基本ながら、結構難しいです。特に開いた後閉じるのが。</p>
+<p>逆ハの字にすれば勝手に足が開いて進んでくのですが、すぐ止まっちゃうか、そのままマタサキになってしまいがち。</p>
+<p>開いて進んだら、かかと側を押し出すようにブレードの少し後ろ目に乗ってあげると、足がハの字になって閉じてくれます。基本的にフォアでは少し後ろに乗ります。</p>
+<h3 id="片足滑走なかなかできない"><a href="#片足滑走なかなかできない" class="headerlink" title="片足滑走なかなかできない"></a>片足滑走なかなかできない</h3><p>まず両足ひょうたんをしっかり深くやります。外側の足でしっかり押します。徐々に内側の足を浮かし外側の足だけで滑ります。それがフォアインの片足滑走です。</p>
+<p>同様に内側の足で押し、外側を浮かせればフォアアウトです。</p>
+<p>フォアアウトでしっかりインを押し片足で長く滑りチェックの姿勢を取ればストロークになります。</p>
+<h2 id="滑ってみる続編"><a href="#滑ってみる続編" class="headerlink" title="滑ってみる続編"></a>滑ってみる続編</h2><h3 id="サポーターつける？"><a href="#サポーターつける？" class="headerlink" title="サポーターつける？"></a>サポーターつける？</h3><h3 id="クロスがうまく出来ない"><a href="#クロスがうまく出来ない" class="headerlink" title="クロスがうまく出来ない"></a>クロスがうまく出来ない</h3><p>まずシャッセをやりましょう。<br>…</p>
+<h3 id="ターンで腰が回ってしまう"><a href="#ターンで腰が回ってしまう" class="headerlink" title="ターンで腰が回ってしまう"></a>ターンで腰が回ってしまう</h3><p>…</p>
+<h2 id="オフアイス編"><a href="#オフアイス編" class="headerlink" title="オフアイス編"></a>オフアイス編</h2><h3 id="筋トレは必要？"><a href="#筋トレは必要？" class="headerlink" title="筋トレは必要？"></a>筋トレは必要？</h3><p>最初のうちは、軽い運動が問題なくできる程度の体力と筋力があれば問題ないので、無理にする必要はないです。スケートで必要となる内股の筋肉はつけにくいので、多く滑って自然につける、と捉えた方がよいかと。あと背筋も使います。</p>
+<p>スケートのためというより、継続的に体操やウォーキングをやるのはもちろんいいですね。</p>
+<p>二分のプログラムをスピードを落とさず滑りきりたいとか高いジャンプを飛びたいとかなってくると、股上げやダッシュなどで体力筋力をつけるのもありですが。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/figureskating/practise/howtostart.html" data-id="cizo0286o002k80pvrfvii0ui" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-game/kancolle/kancolle-ranker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/game/kancolle/kancolle-ranker.html" class="article-date">
+  <time datetime="2016-09-21T15:00:00.000Z" itemprop="datePublished">2016-09-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/hexo/categories/ゲーム/">ゲーム</a>►<a class="article-category-link" href="/hexo/categories/ゲーム/艦これ/">艦これ</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo/game/kancolle/kancolle-ranker.html">3群ランカー</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="必要戦果"><a href="#必要戦果" class="headerlink" title="必要戦果"></a>必要戦果</h2><p>E0全部割って(+705)、5-4を毎日15周して(+900)、適宜オリョクル・北方・東方クエなどをこなせば<br>およそ 1,700 ぐらいになるので、これくらいあれば500位には足りるかと。</p>
+<h2 id="5-4周回"><a href="#5-4周回" class="headerlink" title="5-4周回"></a>5-4周回</h2><p>下記二種類をローテーションさせて疲労抜きさせる。</p>
+<h3 id="中央ルート-：潜水艦"><a href="#中央ルート-：潜水艦" class="headerlink" title="中央ルート ：潜水艦"></a>中央ルート ：潜水艦</h3><p>安い、速いで効率が高い。HPの低いろーちゃんを旗艦にして、まるゆにダメコンを積ませる。<br>まるゆがボス前で大破することがそこそこあるが、ダメコン積んで進んでも、まず使われることはない。<br>まるゆを入れておくと被弾しても修理が速いため効率があがる。撃破率は若干落ちるが、さほど問題ではない。<br>ボスでは夜戦までやらないとC敗北することがある。</p>
+<p>オール単縦。</p>
+<h3 id="北ルート：高速・ドラム４"><a href="#北ルート：高速・ドラム４" class="headerlink" title="北ルート：高速・ドラム４"></a>北ルート：高速・ドラム４</h3><p>高速戦艦１、空母２、重巡１は固定で。戦艦は連撃装備に徹甲弾、制空は360程度。</p>
+<p>ドラム缶を積める駆逐艦を育成する場合は、駆逐艦（ドラム缶３）を旗艦にし航巡（＋ドラム缶１）を加える。<br>積めない重巡などを育成する場合は、通常装備でそれを旗艦にし、航巡（ドラム缶４）を加える。</p>
+<ul>
+<li>駆逐艦（ドラム缶３） or 他種艦（連撃装備）</li>
+<li>戦艦（連撃装備、徹甲弾）</li>
+<li>航巡（ドラム缶１）or 航巡（ドラム缶４）</li>
+<li>重巡（連撃装備）</li>
+<li>空母 x 2 （制空360程度）</li>
+</ul>
+<p>オール単縦。２戦目は複縦でもいいが、単縦でぶちのめしたほうが結局被弾も少ない。</p>
+<ul>
+<li>未改造駆逐艦だとさすがに大破することが多いので、演習などで改造レベルに達してからのほうがよい。</li>
+<li>ボス戦では無理にS勝利狙いで夜戦をする必要はないが、残りが輸送艦のみで補給艦クエが残ってる場合などは行ってもよい。</li>
+<li>航巡はそれぞれ２隻ずつ用意し、数隻をドラム缶４搭載、それ以外を連撃装備＋ドラム缶１にしてローテーションさせるとよい。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/game/kancolle/kancolle-ranker.html" data-id="cizo0286q002m80pvsmauarmi" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-game/kancolle/kancolle_kensho" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/game/kancolle/kancolle_kensho.html" class="article-date">
+  <time datetime="2016-06-27T15:00:00.000Z" itemprop="datePublished">2016-06-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/hexo/game/kancolle/kancolle_kensho.html">艦これ検証部問題メモ</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p><a href="http://ja.kancollekensho.wikia.com/wiki/%E8%89%A6%E3%81%93%E3%82%8C%E6%A4%9C%E8%A8%BC%E9%83%A8%E3%81%BE%E3%81%A8%E3%82%81_Wikia" target="_blank" rel="external">艦これ検証部まとめ Wikia - Wikia</a><br>をどうぞ。</p>
+<h2 id="主要人物"><a href="#主要人物" class="headerlink" title="主要人物"></a>主要人物</h2><ul>
+<li>検証部<ul>
+<li>在籍<ul>
+<li>のいじ</li>
+<li>南条</li>
+</ul>
+</li>
+<li>脱退<ul>
+<li>びいかめ</li>
+<li>CC</li>
+<li>オリカル</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>批判者<ul>
+<li>監察部</li>
+<li>たのごろう</li>
+<li>ktgohan（卵のひと）</li>
+</ul>
+</li>
+</ul>
+<h2 id="音声ファイル"><a href="#音声ファイル" class="headerlink" title="音声ファイル"></a>音声ファイル</h2><ul>
+<li>書き起こし001: <a href="https://docs.google.com/document/d/1exavzHqOTU1NJ8wZosVQ6A3pxphXl7ZytSGsLgoN2ns/edit" target="_blank" rel="external">https://docs.google.com/document/d/1exavzHqOTU1NJ8wZosVQ6A3pxphXl7ZytSGsLgoN2ns/edit</a></li>
+<li>書き起こし002: 消えた</li>
+</ul>
+<h2 id="南条氏謝罪"><a href="#南条氏謝罪" class="headerlink" title="南条氏謝罪"></a>南条氏謝罪</h2><p>6/26/2016づけ「お詫び」文書：<a href="http://www.asahi-net.or.jp/~JR7K-SGMT/owabi.pdf" target="_blank" rel="external">http://www.asahi-net.or.jp/~JR7K-SGMT/owabi.pdf</a></p>
+<ul>
+<li>検証部部員への「オフレコ暴露話」はすべて虚言</li>
+<li>「のいじ氏にtwitter垢を任せていた」のも嘘</li>
+</ul>
+<h2 id="検証DB仕様"><a href="#検証DB仕様" class="headerlink" title="検証DB仕様"></a>検証DB仕様</h2><ul>
+<li>RDBM などは使っておらず json 形式のテキストデータを保持</li>
+<li>「人数」は UUID 数、つまり接続セッション数のこと。６月末時点で実人数は500人程度</li>
+<li>分析時はローカルのPCにダウンロードして行う<ul>
+<li>その「ダウンロードツール」はID, パスワードが埋め込まれており、それを入手すれば誰でもデーターをダウンロード可能。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/game/kancolle/kancolle_kensho.html" data-id="cizo0286t002q80pvocy2asyz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/hexo/page/2/">2</a><a class="page-number" href="/hexo/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/hexo/page/7/">7</a><a class="extend next" rel="next" href="/hexo/page/2/">__('next') &raquo;</a>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/figureskating/">figureskating</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/hobby/">hobby</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/">software</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/hexo/">hexo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/">ゲーム</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/WoT/">WoT</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/">艦これ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/イベント/">イベント</a></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/SSG/">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/kancolle/">kancolle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/middleman/">middleman</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/vagrant/">vagrant</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/hexo/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/hexo/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/hexo/tags/kancolle/" style="font-size: 10px;">kancolle</a> <a href="/hexo/tags/middleman/" style="font-size: 20px;">middleman</a> <a href="/hexo/tags/vagrant/" style="font-size: 10px;">vagrant</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/03/">March 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/01/">January 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2014/11/">November 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo/software/hexo-vagrant.html">HEXO を vagrant 上で使ってみる</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/hugo-vagrant.html">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/figureskating/cheat_sheet.html">フィギュアスケート・チートシート</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/game/kancolle/event/2017-winter.html">2017冬イベント「光作戦」</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/middleman/v4-resources-collection.html">middleman v4 の collection と resources 機能を使ってみる</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo/" class="mobile-nav-link">Home</a>
+  
+    <a href="/hexo/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/hexo/fancybox/jquery.fancybox.css">
+  <script src="/hexo/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/hexo/js/script.js"></script>
+
+  </div>
+</body>
+</html>

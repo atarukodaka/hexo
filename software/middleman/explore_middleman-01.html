@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>middleman を読む | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="middleman を読む手順結構複雑で、難しいです。
+
+rack / middleware
+module, extend など ruby の詳細
+hook の動き
+
+などについての知識が必要になります。
+根幹となる機能も “core-extensions” と拡張機能扱いで実装されているので、追っていくのがなかなか大変です。
+手順として、
+
+まず console で触る
+サンプルスクリプトを書き">
+<meta property="og:type" content="article">
+<meta property="og:title" content="middleman を読む">
+<meta property="og:url" content="http://atarukodaka.github.io/hexo/software/middleman/explore_middleman-01.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="middleman を読む手順結構複雑で、難しいです。
+
+rack / middleware
+module, extend など ruby の詳細
+hook の動き
+
+などについての知識が必要になります。
+根幹となる機能も “core-extensions” と拡張機能扱いで実装されているので、追っていくのがなかなか大変です。
+手順として、
+
+まず console で触る
+サンプルスクリプトを書き">
+<meta property="og:updated_time" content="2017-02-27T05:34:49.277Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="middleman を読む">
+<meta name="twitter:description" content="middleman を読む手順結構複雑で、難しいです。
+
+rack / middleware
+module, extend など ruby の詳細
+hook の動き
+
+などについての知識が必要になります。
+根幹となる機能も “core-extensions” と拡張機能扱いで実装されているので、追っていくのがなかなか大変です。
+手順として、
+
+まず console で触る
+サンプルスクリプトを書き">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/hexo/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/hexo/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/hexo/">Home</a>
+        
+          <a class="main-nav-link" href="/hexo/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://atarukodaka.github.io/hexo"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-software/middleman/explore_middleman-01" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/hexo/software/middleman/explore_middleman-01.html" class="article-date">
+  <time datetime="2015-03-18T15:00:00.000Z" itemprop="datePublished">2015-03-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      middleman を読む
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="middleman-を読む手順"><a href="#middleman-を読む手順" class="headerlink" title="middleman を読む手順"></a>middleman を読む手順</h2><p>結構複雑で、難しいです。</p>
+<ul>
+<li>rack / middleware</li>
+<li>module, extend など ruby の詳細</li>
+<li>hook の動き</li>
+</ul>
+<p>などについての知識が必要になります。</p>
+<p>根幹となる機能も “core-extensions” と拡張機能扱いで実装されているので、<br>追っていくのがなかなか大変です。</p>
+<p>手順として、</p>
+<ul>
+<li>まず console で触る</li>
+<li>サンプルスクリプトを書き、簡単な拡張機能を書いてみる</li>
+<li>middlemanのソース一式を手元に落とし、pry や printf デバッグなどでひとつずつ追っていく</li>
+</ul>
+<p>という方法を取ります。</p>
+<h2 id="console-で中身を見る"><a href="#console-で中身を見る" class="headerlink" title="console で中身を見る"></a>console で中身を見る</h2><p>まずは middleman console で中身を見ながら追っていきます。</p>
+<h3 id="インストールと下準備"><a href="#インストールと下準備" class="headerlink" title="インストールと下準備"></a>インストールと下準備</h3><p>シンプルなシステム構成で init します。pry はソースを追うのに必要なのでいれておきます。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">% middleman init mm-tets &amp; <span class="built_in">cd</span> mm-test</div><div class="line">% vi Gemfile</div><div class="line">gem <span class="string">'pry-byebug'</span></div><div class="line">gem <span class="string">'middleman-pry'</span></div><div class="line">gem <span class="string">'rb-readline'</span></div><div class="line">gem <span class="string">'therubyracer'</span></div><div class="line">% bundle</div></pre></td></tr></table></figure>
+<h3 id="app-Middleman-Application"><a href="#app-Middleman-Application" class="headerlink" title="app (Middleman::Application)"></a>app (Middleman::Application)</h3><p>console を起動し、self を見ます。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">% bundle exec middleman console --verbose</div><div class="line">[<span class="number">1</span>] pry(#&lt;Middleman::Application::MiddlemanApplication1&gt;)&gt; <span class="keyword">self</span></div><div class="line">=&gt; #&lt;Middleman::Application:0x70265526584800&gt;</div><div class="line">[<span class="number">2</span>] pry(#&lt;Middleman::Application::MiddlemanApplication1&gt;)&gt; <span class="keyword">self</span>.<span class="keyword">class</span></div><div class="line">=&gt; Middleman::Application::MiddlemanApplication1</div></pre></td></tr></table></figure>
+<p><strong>Middleman::Application</strong> というのがアプリケーション用のクラス。箱。<br>これに後述の拡張機能を登録しフックを仕込み、順次駆動させていく形になります。<br>このクラスにextend バリバリつかって module を組み込んでいくため、<br>他のリクエスト、プロセスとの混乱しないよう、<br>リクエストごとに <strong>Middleman::Application::MiddlemanApplication1</strong>というように番号を振った派生クラスを作り、<br>それを利用していくことになります。</p>
+<h3 id="sitemap-Middleman-Sitemap-Store-resources-Middleman-Sitemap-Resource"><a href="#sitemap-Middleman-Sitemap-Store-resources-Middleman-Sitemap-Resource" class="headerlink" title="sitemap (Middleman::Sitemap::Store), resources[] (Middleman::Sitemap::Resource)"></a>sitemap (Middleman::Sitemap::Store), resources[] (Middleman::Sitemap::Resource)</h3><p>次に sitemap と sitemap.resources を見ます：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">[<span class="number">3</span>] pry(#&lt;Middleman::Application::MiddlemanApplication1&gt;)&gt; sitemap</div><div class="line">=&gt; #&lt;Middleman::Sitemap::Store:0x007fcfef180878</div><div class="line"> @_cached_metadata=&#123;&#125;,</div><div class="line"> @_lookup_by_destination_path=</div><div class="line">  &#123;"images/background.png"=&gt;</div><div class="line">    <span class="comment">#&lt;Middleman::Sitemap::Resource:0x007fcff0db7410</span></div><div class="line">     @app=#&lt;Middleman::Application:0x70265526584800&gt;,</div><div class="line">     @destination_path=<span class="string">"images/background.png"</span>,</div><div class="line">     @local_metadata=&#123;<span class="symbol">:options=&gt;</span>&#123;&#125;, <span class="symbol">:locals=&gt;</span>&#123;&#125;, <span class="symbol">:page=&gt;</span>&#123;&#125;, <span class="symbol">:blocks=&gt;[]</span>&#125;,</div><div class="line">     @path=<span class="string">"images/background.png"</span>,</div><div class="line">     @source_file=<span class="string">"/vagrant/source/mm-test/source/images/background.png"</span>,</div><div class="line">     @store=#&lt;Middleman::Sitemap::Store:0x007fcfef180878 ...&gt;&gt;,</div><div class="line">   <span class="string">"images/middleman.png"</span>=&gt;</div><div class="line">    #&lt;Middleman::Sitemap::Resource:0x007fcff0db6bf0</div><div class="line">     @app=#&lt;Middleman::Application:0x70265526584800&gt;,</div><div class="line">	 ...</div><div class="line">[<span class="number">4</span>] pry(#&lt;Middleman::Application::MiddlemanApplication1&gt;)&gt; sitempap.resources</div><div class="line">=&gt; [#&lt;Middleman::Sitemap::Resource:0x007fcff0db7410</div><div class="line">  @app=#&lt;Middleman::Application:0x70265526584800&gt;,</div><div class="line">  @destination_path=<span class="string">"images/background.png"</span>,</div><div class="line">  @local_metadata=&#123;<span class="symbol">:options=&gt;</span>&#123;&#125;, <span class="symbol">:locals=&gt;</span>&#123;&#125;, <span class="symbol">:page=&gt;</span>&#123;&#125;, <span class="symbol">:blocks=&gt;[]</span>&#125;,</div><div class="line">  @path=<span class="string">"images/background.png"</span>,</div><div class="line">  @source_file=<span class="string">"/vagrant/source/mm-test/source/images/background.png"</span>,</div><div class="line">  @store=</div><div class="line">   #&lt;Middleman::Sitemap::Store:0x007fcfef180878</div><div class="line">    @_cached_metadata=&#123;&#125;,</div><div class="line">    @_lookup_by_destination_path=</div><div class="line">     &#123;"images/background.png"=&gt;</div><div class="line">       <span class="comment">#&lt;Middleman::Sitemap::Resource:0x007fcff0db7410 ...&gt;,</span></div><div class="line">      <span class="string">"images/middleman.png"</span>=&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>Middleman::Sitemap::Store</strong>：source/ 以下のデータを管理するコンテナクラス、</li>
+<li><strong>Middleman::Sitemap::Resource</strong>：それぞれのファイルなどのリソースのコンポーネントクラス。</li>
+</ul>
+<p>この2つがキモとなります。</p>
+<p>特定のリソースを取り出すには、sitemap.find_resource_by_path() を使います：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">[<span class="number">5</span>] pry(#&lt;Middleman::Application::MiddlemanApplication1&gt;)&gt; page = sitemap.find_resource_by_path(<span class="string">"index.html"</span>)</div><div class="line">=&gt; #&lt;Middleman::Sitemap::Resource:0x007f2bd08ecda0</div><div class="line"> @app=#&lt;Middleman::Application:0x69913064777960&gt;,</div><div class="line"> @destination_path=<span class="string">"index.html"</span>,</div><div class="line"> @local_metadata=&#123;<span class="symbol">:options=&gt;</span>&#123;&#125;, <span class="symbol">:locals=&gt;</span>&#123;&#125;, <span class="symbol">:page=&gt;</span>&#123;&#125;, <span class="symbol">:blocks=&gt;[]</span>&#125;,</div><div class="line"> @path=<span class="string">"index.html"</span>,</div><div class="line"> @source_file=<span class="string">"/vagrant/source/mm-test/source/index.html.erb"</span>,</div><div class="line"> @store=</div><div class="line">  #&lt;Middleman::Sitemap::Store:0x007f2bceda42c8</div><div class="line">   @_cached_metadata=&#123;&#125;,</div><div class="line">   @_lookup_by_destination_path=</div><div class="line">   ...</div></pre></td></tr></table></figure>
+<p>これで page で特定のリソース(“/index.html”)のデータやパスなどの情報にアクセスできます。また render でテンプレートに従い加工されたテキストが返ります。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[<span class="number">6</span>] pry(#&lt;Middleman::Application::MiddlemanApplication1&gt;)&gt; page.data</div><div class="line">=&gt; &#123;<span class="string">"title"</span>=&gt;<span class="string">"Welcome to Middleman"</span>&#125;</div><div class="line">[<span class="number">7</span>] pry(#&lt;Middleman::Application::MiddlemanApplication1&gt;)&gt; page.path</div><div class="line">=&gt; <span class="string">"index.html"</span></div><div class="line">[<span class="number">8</span>] pry(#&lt;Middleman::Application::MiddlemanApplication1&gt;)&gt; page.source_file</div><div class="line">=&gt; <span class="string">"/vagrant/source/mm-test/source/index.html.erb"</span></div><div class="line">[<span class="number">17</span>] pry(#&lt;Middleman::Application::MiddlemanApplication1&gt;)&gt; page.render</div><div class="line">=&gt; <span class="string">"&lt;!doctype html&gt;\n&lt;html&gt;\n  &lt;head&gt;\n    &lt;meta charset=\"utf-8\"&gt;\n    \n    &lt;!-- Always force latest IE rendering engine or request Chrome Frame --&gt;\n...</span></div></pre></td></tr></table></figure>
+<h2 id="Middleman-Application-クラス"><a href="#Middleman-Application-クラス" class="headerlink" title="Middleman::Application クラス"></a>Middleman::Application クラス</h2><p>Middleman::Application クラスを見てみます。</p>
+<h3 id="define-hooks"><a href="#define-hooks" class="headerlink" title="define hooks"></a>define hooks</h3><p><a href="https://github.com/middleman/middleman/blob/v3-stable/middleman-core/lib/middleman-core/application.rb#L37" target="_blank" rel="external">37行目あたり</a> にhook の定義がされています。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Before request hook</span></div><div class="line">define_hook <span class="symbol">:before</span></div><div class="line"></div><div class="line"><span class="comment"># Ready (all loading and parsing of extensions complete) hook</span></div><div class="line">define_hook <span class="symbol">:ready</span></div><div class="line"></div><div class="line"><span class="comment"># Runs before the build is started</span></div><div class="line">define_hook <span class="symbol">:before_build</span></div><div class="line"></div><div class="line"><span class="comment"># Runs after the build is finished</span></div><div class="line">define_hook <span class="symbol">:after_build</span></div></pre></td></tr></table></figure>
+<p>ここでは４つのみですが、後ほどもっと出てきます。</p>
+<h3 id="core-extensions-の-register"><a href="#core-extensions-の-register" class="headerlink" title="core-extensions の register"></a>core-extensions の register</h3><p><a href="https://github.com/middleman/middleman/blob/v3-stable/middleman-core/lib/middleman-core/application.rb#L142" target="_blank" rel="external">142行目あたり</a> から、いよいよ extensions の register が行われていきます。</p>
+<p>まず、”include Middleman::CoreExtensions::Extensions” してますが、このモジュールには register()関数が定義されてて、これを使うことにより拡張機能(extension)を登録(register)することができます。詳しくは後述します。</p>
+<p>このregister 関数を使って Middleman::CoreExtensions::Request, ShowException, FileWatcher… などの「コアな」extension をどんどん登録してきます。</p>
+<h2 id="拡張機能の仕組み"><a href="#拡張機能の仕組み" class="headerlink" title="拡張機能の仕組み"></a>拡張機能の仕組み</h2><p>主な機能としては、</p>
+<ul>
+<li>ヘルパー関数の提供</li>
+<li>フックの仕込み</li>
+</ul>
+<p>があります。</p>
+<p>簡単な拡張機能を作りながら、動きを追っていきます。</p>
+<h3 id="ヘルパー関数"><a href="#ヘルパー関数" class="headerlink" title="ヘルパー関数"></a>ヘルパー関数</h3><h4 id="helpers-hello-rb"><a href="#helpers-hello-rb" class="headerlink" title="helpers/hello.rb"></a>helpers/hello.rb</h4><p>簡単なのは、helpers/ 以下のファイルに規則にそって定義することです：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">% vi helpers/hello_helpers.rb</div><div class="line"><span class="class"><span class="keyword">module</span> <span class="title">HelloHelpers</span></span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">hello</span></span></div><div class="line">    <span class="string">"hello world"</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+<p>こうすると、<a href="https://github.com/middleman/middleman/blob/v3-stable/middleman-core/lib/middleman-core/core_extensions/external_helpers.rb#L18" target="_blank" rel="external">Middleman::CoreExtensions::ExternalHelpers</a> で require され<br><a href="https://github.com/middleman/middleman/blob/v3-stable/middleman-core/lib/middleman-core/extension.rb#L24" target="_blank" rel="external">Middleman::Extensionのhelpers</a><br>を使って module し app 内に組み込まれます(app.class.send(:include, m))。</p>
+<h4 id="簡単な-extension"><a href="#簡単な-extension" class="headerlink" title="簡単な extension"></a>簡単な extension</h4><p>次に extension でやってみます。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">% vi extensions/hello/middleman-hello.rb</div><div class="line"><span class="class"><span class="keyword">module</span> <span class="title">Middleman</span></span></div><div class="line">  <span class="class"><span class="keyword">module</span> <span class="title">Hello</span></span></div><div class="line">    <span class="class"><span class="keyword">module</span> <span class="title">Helpers</span></span></div><div class="line">      <span class="function"><span class="keyword">def</span> <span class="title">hello</span></span></div><div class="line">        <span class="string">"hello world"</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">    <span class="keyword">end</span></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Extension</span> &lt; Middleman::Extension</span></div><div class="line">      helpers <span class="keyword">do</span> </div><div class="line">        <span class="keyword">include</span> Helpers</div><div class="line">      <span class="keyword">end</span></div><div class="line">    <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div><div class="line">  </div><div class="line">Middleman::Extensions.register(<span class="symbol">:hello</span>) <span class="keyword">do</span></div><div class="line">  Middleman::Hello::Extension</div><div class="line"><span class="keyword">end</span></div><div class="line"></div><div class="line">% vi config.rb</div><div class="line"><span class="keyword">require</span> <span class="string">'extensions/middleman-hello'</span></div><div class="line">activate <span class="symbol">:hello</span></div></pre></td></tr></table></figure>
+<p>Middleman::Extension から派生させたクラスを作り、同様に helper 関数を組み込みます。</p>
+<p>config.rb でそれを require し <strong>activate</strong> （後述）させれば、hello() 関数が使えるようになります。</p>
+<h4 id="手を加える"><a href="#手を加える" class="headerlink" title="手を加える"></a>手を加える</h4><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">module</span> <span class="title">Middleman</span></span></div><div class="line">  <span class="class"><span class="keyword">module</span> <span class="title">Hello</span></span></div><div class="line">    <span class="class"><span class="keyword">class</span> &lt;&lt; self</span></div><div class="line">      <span class="function"><span class="keyword">def</span> <span class="title">registered</span><span class="params">(app)</span></span></div><div class="line">        $stderr.puts(<span class="string">"- middleman-hello registered"</span>)</div><div class="line">        app.send <span class="symbol">:include</span>, InstanceMethods</div><div class="line">      <span class="keyword">end</span></div><div class="line">    <span class="keyword">end</span></div><div class="line">    <span class="class"><span class="keyword">module</span> <span class="title">InstanceMethods</span></span></div><div class="line">      <span class="function"><span class="keyword">def</span> <span class="title">hello</span></span></div><div class="line">        <span class="string">"hello world"</span></div><div class="line">      <span class="keyword">end</span></div><div class="line">    <span class="keyword">end</span></div><div class="line">  <span class="keyword">end</span></div><div class="line"><span class="keyword">end</span></div><div class="line">  </div><div class="line">Middleman::Extensions.register(<span class="symbol">:hello</span>) <span class="keyword">do</span></div><div class="line">  Middleman::Hello</div><div class="line"><span class="keyword">end</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://atarukodaka.github.io/hexo/hexo/software/middleman/explore_middleman-01.html" data-id="cizo0286z002z80pvw1fckyur" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/hexo/software/middleman/redcarpet-toc.html" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          middlemanページの目次を作る
+        
+      </div>
+    </a>
+  
+  
+    <a href="/hexo/software/middleman/susume/08-memo.html" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">middleman を読む</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/figureskating/">figureskating</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/hobby/">hobby</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/">software</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/software/hexo/">hexo</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/">ゲーム</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/WoT/">WoT</a></li><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/">艦これ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/hexo/categories/ゲーム/艦これ/イベント/">イベント</a></li></ul></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/SSG/">SSG</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/kancolle/">kancolle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/middleman/">middleman</a></li><li class="tag-list-item"><a class="tag-list-link" href="/hexo/tags/vagrant/">vagrant</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/hexo/tags/SSG/" style="font-size: 10px;">SSG</a> <a href="/hexo/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/hexo/tags/kancolle/" style="font-size: 10px;">kancolle</a> <a href="/hexo/tags/middleman/" style="font-size: 20px;">middleman</a> <a href="/hexo/tags/vagrant/" style="font-size: 10px;">vagrant</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/03/">March 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/12/">December 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/08/">August 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/03/">March 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2015/01/">January 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/hexo/archives/2014/11/">November 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/hexo/software/hexo-vagrant.html">HEXO を vagrant 上で使ってみる</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/hugo-vagrant.html">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/figureskating/cheat_sheet.html">フィギュアスケート・チートシート</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/game/kancolle/event/2017-winter.html">2017冬イベント「光作戦」</a>
+          </li>
+        
+          <li>
+            <a href="/hexo/software/middleman/v4-resources-collection.html">middleman v4 の collection と resources 機能を使ってみる</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/hexo/" class="mobile-nav-link">Home</a>
+  
+    <a href="/hexo/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/hexo/fancybox/jquery.fancybox.css">
+  <script src="/hexo/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/hexo/js/script.js"></script>
+
+  </div>
+</body>
+</html>
